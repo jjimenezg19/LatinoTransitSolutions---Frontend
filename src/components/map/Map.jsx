@@ -1,24 +1,29 @@
 import { useEffect } from "react"
+import googleLoader from "../../utils/google.js"
 
 export default function Map({ deleteMarkers, onUpdateDeleteMarkers, onUpdateMap, onUpdateMarkers }) {
   const markersList = []
 
   useEffect(() => {
-    initMap()
+    Promise.all([googleLoader.importLibrary("maps"), googleLoader.importLibrary("marker")]).then((response) => {
+      const [mapLibrary, markerLibrary] = response
+      initMap(mapLibrary.Map, markerLibrary.AdvancedMarkerElement)
+    })
   }, [])
 
-  useEffect(() => {
-    if (deleteMarkers) {
-      markersList.forEach((marker) => {
-        marker.setMap(null)
-      })
+  // useEffect(() => {
+  //   if (deleteMarkers) {
+  //     markersList.forEach((marker) => {
+  //       marker.setMap(null)
+  //     })
 
-      onUpdateDeleteMarkers(false)
-    }
-  }, [deleteMarkers])
+  //     onUpdateDeleteMarkers(false)
+  //   }
+  // }, [deleteMarkers])
 
-  const initMap = () => {
-    const map = new google.maps.Map(document.getElementById("map"), {
+  const initMap = (Map, AdvancedMarkerElement) => {
+    const map = new Map(document.getElementById("map"), {
+      mapId: "latinotransitsolutions-map",
       zoom: 16,
       center: { lat: 9.902832813099959, lng: -84.10007357597351 }
     })
@@ -28,7 +33,7 @@ export default function Map({ deleteMarkers, onUpdateDeleteMarkers, onUpdateMap,
     map.addListener("click", ({ latLng: position }) => {
       if (markersList.length >= 2) return
 
-      const marker = new google.maps.Marker({ map, position })
+      const marker = new AdvancedMarkerElement({ map, position })
       markersList.push(marker)
 
       marker.addListener("click", () => {
@@ -39,5 +44,5 @@ export default function Map({ deleteMarkers, onUpdateDeleteMarkers, onUpdateMap,
     })
   }
 
-  return <div id="map" className="shrink-0 grow-0 w-200 h-200"></div>
+  return <div id="map" className="shrink-0 grow-0 w-150 h-150"></div>
 }
