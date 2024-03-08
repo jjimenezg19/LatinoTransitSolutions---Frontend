@@ -45,10 +45,10 @@ export default function MapControls({ map, markers, onClearMarkers }) {
 
   return (
     <div className="flex flex-col gap-4">
-      <button disabled={markers.length < 2} onClick={setRoute} className="base-button">
+      <button disabled={markers.length < 2} onClick={setRoute}>
         Start route
       </button>
-      <button disabled={!markers?.length} onClick={() => onClearMarkers(true)} className="base-button">
+      <button disabled={!markers?.length} onClick={() => onClearMarkers(true)}>
         Clear markers
       </button>
       <div>Distance: {infoRoute?.distance.text || "0 km"}</div>

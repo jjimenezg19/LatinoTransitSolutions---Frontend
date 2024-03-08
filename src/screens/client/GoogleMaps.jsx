@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
-import Map from "../components/map/Map"
-import MapControls from "../components/map/MapControls"
+import Map from "../../components/map/Map"
+import MapControls from "../../components/map/MapControls"
 
 export default function GoogleMaps() {
   const [map, setMap] = useState(null)

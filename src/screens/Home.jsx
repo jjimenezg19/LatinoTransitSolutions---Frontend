@@ -20,13 +20,7 @@ export default function Home() {
 
   return (
     <section className="w-full h-full flex justify-center items-center">
-      <div className="flex flex-col gap-4 items-center">
-        <h3>Hurrah! You are authenticated!</h3>
-        {isAuth ? "Store state saved" : "Store state not saved"}
-        <button disabled={allCities} className="base-button" onClick={getAllCities}>
-          {!allCities ? "Get All Cities" : "Check your console!"}
-        </button>
-      </div>
+      <h3>Hurrah! You are authenticated!</h3>
     </section>
   )
 }

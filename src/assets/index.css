@@ -78,18 +78,18 @@
 }
 
 @layer components {
-  .base-button {
-    @apply bg-sky-700 hover:bg-sky-600 rounded-md px-2 py-1 cursor-pointer text-slate-50;
+  button {
+    @apply bg-sky-700 hover:bg-sky-600 rounded-md px-3 py-1 cursor-pointer text-neutral-50;
   }
-  .base-button:active {
+  button:active {
     @apply bg-sky-500;
   }
-  .base-button:disabled {
+  button:disabled {
     @apply !bg-sky-900/80 hover:!bg-sky-900/80 text-slate-400 cursor-not-allowed;
   }
 
-  .base-input {
-    @apply outline-none rounded-md px-2 py-1 text-black;
+  input {
+    @apply outline-none rounded-md px-2 py-1 text-black w-full border-2 border-transparent;
   }
 }
 
