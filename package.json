@@ -1,19 +1,23 @@
 {
   "name": "latinotransitsolutions---frontend",
   "version": "0.1.0",
+  "type": "module",
   "private": true,
   "scripts": {
-    "dev": "react-scripts start",
-    "build": "react-scripts build"
+    "dev": "vite --port 3000",
+    "build": "vite build",
+    "serve": "vite preview"
   },
   "dependencies": {
+    "@googlemaps/js-api-loader": "1.16.6",
     "axios": "1.6.7",
     "lodash": "4.17.21",
     "react": "18.2.0",
-    "react-dom": "18.2.0",
-    "react-scripts": "5.0.1"
+    "react-dom": "18.2.0"
   },
   "devDependencies": {
+    "@vitejs/plugin-react": "4.2.1",
+    "autoprefixer": "10.4.18",
     "crypto-js": "4.2.0",
     "prettier": "3.2.5",
     "react-router-dom": "6.22.1",
@@ -22,17 +26,5 @@
   },
   "browser": {
     "crypto": false
-  },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
   }
 }
