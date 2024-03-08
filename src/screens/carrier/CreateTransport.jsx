@@ -9,43 +9,43 @@ export default function CreateTransport() {
 
         <div className="w-full grid md:grid-cols-2 gap-x-8 gap-y-4">
           <div className="flex flex-col gap-2">
-            <label className="font-medium leading-none" for="type">
+            <label className="font-medium leading-none" htmlFor="type">
               Type
             </label>
             <input id="type" placeholder="Select type" />
           </div>
           <div className="flex flex-col gap-2">
-            <label className="font-medium leading-none" for="name">
+            <label className="font-medium leading-none" htmlFor="name">
               Name
             </label>
             <input id="name" placeholder="Enter transport name" />
           </div>
           <div className="flex flex-col gap-2">
-            <label className="font-medium leading-none" for="max-width">
+            <label className="font-medium leading-none" htmlFor="max-width">
               Max width
             </label>
             <input id="max-width" placeholder="Enter max width" type="number" min="0" />
           </div>
           <div className="flex flex-col gap-2">
-            <label className="font-medium leading-none" for="max-height">
+            <label className="font-medium leading-none" htmlFor="max-height">
               Max height
             </label>
             <input id="max-height" placeholder="Enter max height" type="number" min="0" />
           </div>
           <div className="flex flex-col gap-2">
-            <label className="font-medium leading-none" for="max-length">
+            <label className="font-medium leading-none" htmlFor="max-length">
               Max length
             </label>
             <input id="max-length" placeholder="Enter max length" type="number" min="0" />
           </div>
           <div className="flex flex-col gap-2">
-            <label className="font-medium leading-none" for="max-weight">
+            <label className="font-medium leading-none" htmlFor="max-weight">
               Max weight
             </label>
             <input id="max-weight" placeholder="Enter max weight" type="number" min="0" />
           </div>
           <div className="flex flex-col gap-2">
-            <label className="font-medium leading-none" for="plate">
+            <label className="font-medium leading-none" htmlFor="plate">
               Plate
             </label>
             <input id="plate" placeholder="Enter transport plate" />
