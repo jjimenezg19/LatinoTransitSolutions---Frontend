@@ -1,8 +1,8 @@
 import Axios from "axios"
 import { AES, enc } from "crypto-js"
 
-const API_URL = import.meta.env.REACT_APP_API_URL
-const TOKEN_ENCRYPT = import.meta.env.REACT_APP_TOKEN_ENCRYPT
+const API_URL = import.meta.env.VITE_API_URL
+const TOKEN_ENCRYPT = import.meta.env.VITE_TOKEN_ENCRYPT
 
 const axios = Axios.create({ baseURL: API_URL + "/api", timeout: 15000 })
 const simpleAxios = Axios.create({ baseURL: API_URL + "/api", timeout: 15000 })

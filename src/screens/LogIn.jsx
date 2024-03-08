@@ -4,7 +4,7 @@ import { useSystemStore } from "../stores/system.js"
 import { simpleAxios } from "../utils/axios.js"
 import { useNavigate } from "react-router-dom"
 
-const TOKEN_ENCRYPT = import.meta.env.REACT_APP_TOKEN_ENCRYPT
+const TOKEN_ENCRYPT = import.meta.env.VITE_TOKEN_ENCRYPT
 
 export default function AboutUs() {
   const [email, setEmail] = useState("")
