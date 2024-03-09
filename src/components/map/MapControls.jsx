@@ -42,7 +42,7 @@ export default function MapControls({ map, markers, onClearMarkers }) {
           window.alert("Directions request failed due to " + e)
         })
 
-      onClearMarkers(true)
+      onClearMarkers()
     })
   }
 
@@ -51,7 +51,7 @@ export default function MapControls({ map, markers, onClearMarkers }) {
       <button disabled={markers.length < 2} onClick={setRoute}>
         Start route
       </button>
-      <button disabled={!markers?.length} onClick={() => onClearMarkers(true)}>
+      <button disabled={!markers?.length} onClick={onClearMarkers}>
         Clear markers
       </button>
       <div>Distance: {infoRoute?.distance.text || "0 km"}</div>
