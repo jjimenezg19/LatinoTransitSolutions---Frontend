@@ -48,6 +48,10 @@
   h6 {
     @apply text-xl;
   }
+
+  a:hover {
+    @apply text-sky-400;
+  }
 }
 
 @layer utilities {
@@ -79,7 +83,7 @@
 
 @layer components {
   button {
-    @apply bg-sky-700 hover:bg-sky-600 rounded-md px-3 py-1 cursor-pointer text-neutral-50;
+    @apply bg-sky-700 hover:bg-sky-600 rounded-md h-9 px-3 cursor-pointer text-neutral-50;
   }
   button:active {
     @apply bg-sky-500;
@@ -89,7 +93,12 @@
   }
 
   input {
-    @apply outline-none rounded-md px-2 py-1 text-black w-full border-2 border-transparent;
+    @apply py-1;
+  }
+
+  input,
+  select {
+    @apply outline-none rounded-md px-2 h-9 text-black w-full border-2 border-transparent;
   }
 }
 
