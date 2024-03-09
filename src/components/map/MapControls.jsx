@@ -1,18 +1,22 @@
-import { useEffect, useState } from "react"
-import googleLoader from "../../utils/google.js"
+import { useState } from "react"
+import { googleLoader } from "../../utils/google.js"
 
-export default function MapControls({ map, markers, onClearMarkers }) {
+export default function MapControls({ map, markers, onUpdateActions }) {
   const [infoRoute, setInfoRoute] = useState(null)
+  const [hasRoute, setHasRoute] = useState(false)
+  const [directionsRenderer, setDirectionsRenderer] = useState(null)
 
   const setRoute = () => {
-    if (markers.length < 2) return
+    if (!markers.origin || !markers.destination) return
 
-    googleLoader.importLibrary("routes").then(({ DirectionsRenderer, DirectionsService, DistanceMatrixService }) => {
-      const directionsRenderer = new DirectionsRenderer()
+    googleLoader("routes").then(([{ DirectionsRenderer, DirectionsService, DistanceMatrixService }]) => {
+      const renderer = new DirectionsRenderer()
+      setDirectionsRenderer(renderer)
+
       const directionsService = new DirectionsService()
       const distanceMatrixService = new DistanceMatrixService()
 
-      directionsRenderer.setMap(map)
+      renderer.setMap(map)
 
       const request = {
         travelMode: google.maps.TravelMode.DRIVING,
@@ -22,8 +26,8 @@ export default function MapControls({ map, markers, onClearMarkers }) {
       distanceMatrixService
         .getDistanceMatrix({
           ...request,
-          origins: [markers[0].position],
-          destinations: [markers[1].position]
+          origins: [markers.origin.position],
+          destinations: [markers.destination.position]
         })
         .then((response) => {
           setInfoRoute(response.rows[0].elements[0])
@@ -32,11 +36,12 @@ export default function MapControls({ map, markers, onClearMarkers }) {
       directionsService
         .route({
           ...request,
-          origin: markers[0].position,
-          destination: markers[1].position
+          origin: markers.origin.position,
+          destination: markers.destination.position
         })
         .then((response) => {
-          directionsRenderer.setDirections(response)
+          renderer.setDirections(response)
+          setHasRoute(true)
         })
         .catch((e) => {
           window.alert("Directions request failed due to " + e)
@@ -46,16 +51,35 @@ export default function MapControls({ map, markers, onClearMarkers }) {
     })
   }
 
+  const onClearMarkers = () => {
+    changeAction("deleteMarkers")
+  }
+
+  const onResetMap = () => {
+    directionsRenderer.setDirections({ routes: [] })
+    setHasRoute(false)
+    setInfoRoute(null)
+    changeAction("resetMap")
+  }
+
+  const changeAction = (action) => {
+    onUpdateActions((oldval) => ({ ...oldval, [action]: true }))
+  }
+
   return (
-    <div className="flex flex-col gap-4">
-      <button disabled={markers.length < 2} onClick={setRoute}>
+    <div className="flex flex-col gap-3">
+      <button disabled={!markers.origin || !markers.destination} onClick={setRoute}>
         Start route
       </button>
-      <button disabled={!markers?.length} onClick={onClearMarkers}>
-        Clear markers
-      </button>
-      <div>Distance: {infoRoute?.distance.text || "0 km"}</div>
-      <div>Duration: {infoRoute?.duration.text || "0 min"}</div>
+      {hasRoute ? (
+        <button onClick={onResetMap}>Reset map</button>
+      ) : (
+        <button disabled={!markers.origin && !markers.destination} onClick={onClearMarkers}>
+          Clear markers
+        </button>
+      )}
+      <div>Distance: {infoRoute?.distance?.text || "0 km"}</div>
+      <div>Duration: {infoRoute?.duration?.text || "0 min"}</div>
     </div>
   )
 }
