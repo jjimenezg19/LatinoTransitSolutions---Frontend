@@ -6,6 +6,11 @@
 @tailwind components;
 @tailwind utilities;
 
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #7da2e8 transparent;
+}
+
 @layer base {
   :root {
     @apply font-base;
@@ -13,12 +18,7 @@
 
   body,
   #root {
-    @apply h-screen w-full m-0 p-0 box-border overflow-hidden text-base font-normal bg-slate-900 text-slate-50;
-  }
-
-  * {
-    scrollbar-width: thin;
-    scrollbar-color: rgba(var(--bg-slate-100)) transparent;
+    @apply h-screen w-full m-0 p-0 box-border overflow-hidden text-base font-normal bg-ternary text-word;
   }
 
   h1,
@@ -82,23 +82,54 @@
 }
 
 @layer components {
+  /* ---------------------- Button ---------------------- */
   button {
-    @apply bg-sky-700 hover:bg-sky-600 rounded-md h-9 px-3 cursor-pointer text-neutral-50;
-  }
-  button:active {
-    @apply bg-sky-500;
-  }
-  button:disabled {
-    @apply !bg-sky-900/80 hover:!bg-sky-900/80 text-slate-400 cursor-not-allowed;
+    @apply disabled:bg-primary/40 disabled:text-word/40 disabled:cursor-not-allowed cursor-pointer text-word rounded-md border-2;
+    @apply h-8 px-2 text-sm;
+    @apply md:h-10 md:px-3 md:text-base;
   }
 
-  input {
+  /* ---------------------- Button sizes ---------------------- */
+  button[data-size="sm"] {
+    @apply !h-8 !px-2 !text-sm;
+  }
+  button[data-size="md"] {
+    @apply !h-10 !px-3 !text-base;
+  }
+
+  /* ---------------------- Button types ---------------------- */
+  button,
+  button[data-type="primary"] {
+    @apply bg-primary border-transparent hover:bg-primary/90 active:bg-primary/80;
+  }
+  button[data-type="outlined"] {
+    @apply bg-transparent border-primary text-primary hover:border-primary/90 active:border-primary/80 hover:text-primary/90 active:text-primary/80;
+  }
+  button[data-type="flat"] {
+    @apply bg-transparent border-transparent text-primary hover:bg-primary/30 active:bg-primary/20;
+  }
+
+  /* ---------------------- Input and Select ---------------------- */
+  /* input {
     @apply py-1;
+  } */
+
+  label {
+    @apply text-sm;
+    @apply md:text-base;
   }
 
   input,
   select {
-    @apply outline-none rounded-md px-2 h-9 text-black w-full border-2 border-transparent;
+    @apply px-2 outline-none rounded-md bg-secondary-1 text-word w-full border-2 border-secondary-1 hover:border-accent/80 focus:border-accent;
+    @apply h-8 text-sm;
+    @apply md:h-10 md:text-base;
+  }
+
+  input + span,
+  select + span {
+    @apply text-xs h-4;
+    @apply md:text-sm md:h-5;
   }
 }
 

@@ -27,23 +27,25 @@ export default function App() {
 
   return (
     <main className="w-full h-full flex flex-col">
-      <header className="w-full h-12 shrink-0 grow-0 flex justify-between items-center bg-slate-800 px-8">
+      <header className="w-full h-12 shrink-0 grow-0 flex justify-between items-center bg-secondary-1 px-8">
         <div></div>
         <nav className="shrink-0 grow-0 flex justify-center items-center">
           <ul className="w-full flex gap-8 justify-center items-center text-base">
             {clientRoutes.map(({ name, path }, index) => (
               <li key={index}>
-                <NavLink to={path} className={({ isActive }) => (isActive ? "text-orange-400" : "") + " hover:text-orange-400"}>
+                <NavLink to={path} className={({ isActive }) => (isActive ? "text-primary" : "") + " hover:text-primary font-bold"}>
                   {name}
                 </NavLink>
               </li>
             ))}
           </ul>
         </nav>
-        <button onClick={logout}>Log out</button>
+        <button data-type="flat" onClick={logout}>
+          Log out
+        </button>
       </header>
 
-      <section className="w-full h-full shrink grow overflow-y-auto scrollgutter-edges pt-4 px-2 md:px-4">
+      <section className="w-full h-full shrink grow overflow-y-auto md:scrollgutter-edges px-2 py-2 md:py-4">
         <Outlet />
       </section>
     </main>
