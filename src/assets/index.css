@@ -18,7 +18,7 @@
 
   body,
   #root {
-    @apply h-screen w-full m-0 p-0 box-border overflow-hidden text-base font-normal bg-ternary text-word;
+    @apply h-screen w-full m-0 p-0 box-border overflow-hidden text-base font-normal bg-ternary-100 text-word-100;
   }
 
   h1,
@@ -82,38 +82,7 @@
 }
 
 @layer components {
-  /* ---------------------- Button ---------------------- */
-  button {
-    @apply disabled:bg-primary/40 disabled:text-word/40 disabled:cursor-not-allowed cursor-pointer text-word rounded-md border-2;
-    @apply h-8 px-2 text-sm;
-    @apply md:h-10 md:px-3 md:text-base;
-  }
-
-  /* ---------------------- Button sizes ---------------------- */
-  button[data-size="sm"] {
-    @apply !h-8 !px-2 !text-sm;
-  }
-  button[data-size="md"] {
-    @apply !h-10 !px-3 !text-base;
-  }
-
-  /* ---------------------- Button types ---------------------- */
-  button,
-  button[data-type="primary"] {
-    @apply bg-primary border-transparent hover:bg-primary/90 active:bg-primary/80;
-  }
-  button[data-type="outlined"] {
-    @apply bg-transparent border-primary text-primary hover:border-primary/90 active:border-primary/80 hover:text-primary/90 active:text-primary/80;
-  }
-  button[data-type="flat"] {
-    @apply bg-transparent border-transparent text-primary hover:bg-primary/30 active:bg-primary/20;
-  }
-
   /* ---------------------- Input and Select ---------------------- */
-  /* input {
-    @apply py-1;
-  } */
-
   label {
     @apply text-sm;
     @apply md:text-base;
@@ -121,7 +90,7 @@
 
   input,
   select {
-    @apply px-2 outline-none rounded-md bg-secondary-1 text-word w-full border-2 border-secondary-1 hover:border-accent/80 focus:border-accent;
+    @apply px-2 outline-none rounded-md bg-secondary-100 text-word-100 w-full border-2 border-secondary-100 hover:border-accent-100 focus:border-accent-200;
     @apply h-8 text-sm;
     @apply md:h-10 md:text-base;
   }
