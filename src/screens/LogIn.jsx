@@ -5,6 +5,7 @@ import Input from "../components/form/Input.jsx"
 
 import { AES } from "crypto-js"
 import { simpleAxios } from "../utils/axios.js"
+import Button from "../components/form/Button.jsx"
 
 const TOKEN_ENCRYPT = import.meta.env.VITE_TOKEN_ENCRYPT
 
@@ -61,7 +62,7 @@ export default function AboutUs() {
           {error ? <span className="text-red-500 text-center h-6 block">{error}</span> : null}
         </div>
 
-        <button onClick={validateFields}>Login</button>
+        <Button onClick={validateFields}>Login</Button>
 
         <div className="flex flex-col sm:flex-row justify-center gap-1 w-full text-center">
           <span>Don't have an account?</span>

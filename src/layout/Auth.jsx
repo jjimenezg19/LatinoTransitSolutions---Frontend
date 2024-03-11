@@ -1,6 +1,7 @@
 import { useEffect } from "react"
 import { Outlet } from "react-router-dom"
 import { useNavigate, useLocation } from "react-router-dom"
+import Button from "../components/form/Button"
 
 export default function App() {
   const navigate = useNavigate()
@@ -15,8 +16,8 @@ export default function App() {
   return (
     <main className="w-full h-full flex flex-col">
       <header className="w-full h-12 shrink-0 grow-0 flex justify-end items-center gap-4 bg-slate-800 px-8">
-        {pathname !== "/login" ? <button onClick={() => navigate("/login")}>Log in</button> : null}
-        {pathname !== "/signup" ? <button onClick={() => navigate("/signup")}>Sign in</button> : null}
+        {pathname !== "/login" ? <Button onClick={() => navigate("/login")}>Log in</Button> : null}
+        {pathname !== "/signup" ? <Button onClick={() => navigate("/signup")}>Sign in</Button> : null}
       </header>
 
       <section className="w-full h-full shrink grow overflow-y-auto scrollgutter-edges pt-4">

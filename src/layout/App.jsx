@@ -1,6 +1,7 @@
 import { useEffect } from "react"
 import { Outlet, NavLink } from "react-router-dom"
 import { useNavigate } from "react-router-dom"
+import Button from "../components/form/Button"
 
 export default function App() {
   const navigate = useNavigate()
@@ -27,22 +28,22 @@ export default function App() {
 
   return (
     <main className="w-full h-full flex flex-col">
-      <header className="w-full h-12 shrink-0 grow-0 flex justify-between items-center bg-secondary-1 px-8">
-        <div></div>
+      <header className="w-full h-12 shrink-0 grow-0 flex justify-between items-center bg-secondary-100 px-8">
+        <div className="block md:hidden"></div>
         <nav className="shrink-0 grow-0 flex justify-center items-center">
-          <ul className="w-full flex gap-8 justify-center items-center text-base">
+          <ul className="hidden md:flex w-full gap-8 justify-center items-center text-base">
             {clientRoutes.map(({ name, path }, index) => (
               <li key={index}>
-                <NavLink to={path} className={({ isActive }) => (isActive ? "text-primary" : "") + " hover:text-primary font-bold"}>
+                <NavLink to={path} className={({ isActive }) => (isActive ? "text-primary-100" : "") + " hover:text-primary-100 font-bold"}>
                   {name}
                 </NavLink>
               </li>
             ))}
           </ul>
         </nav>
-        <button data-type="flat" onClick={logout}>
+        <Button type="flat" onClick={logout}>
           Log out
-        </button>
+        </Button>
       </header>
 
       <section className="w-full h-full shrink grow overflow-y-auto md:scrollgutter-edges px-2 py-2 md:py-4">

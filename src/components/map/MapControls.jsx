@@ -1,5 +1,6 @@
 import { useState } from "react"
 import { googleLoader } from "../../utils/google.js"
+import Button from "../form/Button.jsx"
 
 export default function MapControls({ map, markers, onUpdateActions }) {
   const [infoRoute, setInfoRoute] = useState(null)
@@ -68,15 +69,15 @@ export default function MapControls({ map, markers, onUpdateActions }) {
 
   return (
     <div className="flex flex-col gap-3">
-      <button disabled={!markers.origin || !markers.destination} onClick={setRoute}>
+      <Button disabled={!markers.origin || !markers.destination} onClick={setRoute}>
         Start route
-      </button>
+      </Button>
       {hasRoute ? (
-        <button onClick={onResetMap}>Reset map</button>
+        <Button onClick={onResetMap}>Reset map</Button>
       ) : (
-        <button disabled={!markers.origin && !markers.destination} onClick={onClearMarkers}>
+        <Button disabled={!markers.origin && !markers.destination} onClick={onClearMarkers}>
           Clear markers
-        </button>
+        </Button>
       )}
       <div>Distance: {infoRoute?.distance?.text || "0 km"}</div>
       <div>Duration: {infoRoute?.duration?.text || "0 min"}</div>

@@ -1,16 +1,18 @@
+import Button from "./Button"
+
 export default function FormActions({ target, calcelText, isEditMode, onConfirm, onCancel }) {
   return isEditMode ? (
     <div className="w-full flex justify-between">
-      <button onClick={onCancel} data-type="outlined" className="bg-negative">
+      <Button onClick={onCancel} color="negative">
         {calcelText || "Cancel"}
-      </button>
-      <button onClick={onConfirm} className="bg-positive">
+      </Button>
+      <Button onClick={onConfirm} color="positive">
         Update {target}
-      </button>
+      </Button>
     </div>
   ) : (
     <div className="w-full flex justify-end">
-      <button onClick={onConfirm}>Register {target}</button>
+      <Button onClick={onConfirm}>Register {target}</Button>
     </div>
   )
 }
