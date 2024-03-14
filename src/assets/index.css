@@ -100,6 +100,14 @@
     @apply text-xs h-4;
     @apply md:text-sm md:h-5;
   }
+
+  .modalOpen {
+    animation: modalFadeIn 0.25s ease-in-out;
+  }
+
+  .modalClose {
+    animation: modalFadeOut 0.25s ease-in-out;
+  }
 }
 
 .gm-style-iw {
@@ -108,4 +116,26 @@
 
 .gm-style-iw-d {
   overflow: hidden !important;
+}
+
+@keyframes modalFadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.7);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes modalFadeOut {
+  from {
+    opacity: 1;
+    transform: scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: scale(0.7);
+  }
 }
