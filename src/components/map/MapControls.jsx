@@ -2,8 +2,7 @@ import { useState } from "react"
 import { googleLoader } from "../../utils/google.js"
 import Button from "../form/Button.jsx"
 
-export default function MapControls({ map, markers, onUpdateActions }) {
-  const [infoRoute, setInfoRoute] = useState(null)
+export default function MapControls({ map, markers, onUpdateActions, onUpdateRouteDetails }) {
   const [hasRoute, setHasRoute] = useState(false)
   const [directionsRenderer, setDirectionsRenderer] = useState(null)
 
@@ -31,7 +30,7 @@ export default function MapControls({ map, markers, onUpdateActions }) {
           destinations: [markers.destination.position]
         })
         .then((response) => {
-          setInfoRoute(response.rows[0].elements[0])
+          onUpdateRouteDetails(response.rows[0].elements[0])
         })
 
       directionsService
@@ -59,7 +58,7 @@ export default function MapControls({ map, markers, onUpdateActions }) {
   const onResetMap = () => {
     directionsRenderer.setDirections({ routes: [] })
     setHasRoute(false)
-    setInfoRoute(null)
+    onUpdateRouteDetails(null)
     changeAction("resetMap")
   }
 
@@ -68,7 +67,7 @@ export default function MapControls({ map, markers, onUpdateActions }) {
   }
 
   return (
-    <div className="flex flex-col gap-3">
+    <div className="flex gap-3">
       <Button disabled={!markers.origin || !markers.destination} onClick={setRoute}>
         Start route
       </Button>
@@ -79,8 +78,6 @@ export default function MapControls({ map, markers, onUpdateActions }) {
           Clear markers
         </Button>
       )}
-      <div>Distance: {infoRoute?.distance?.text || "0 km"}</div>
-      <div>Duration: {infoRoute?.duration?.text || "0 min"}</div>
     </div>
   )
 }
