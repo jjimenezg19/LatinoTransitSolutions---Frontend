@@ -8,22 +8,22 @@ const customColors = {
   "--primary-200": "#db7133",
   "--primary-300": "#dd7a40",
 
-  "--secondary-100": "#11254b",
-  "--secondary-200": "#1c3e7d",
+  "--secondary-100": "#152d5b",
+  "--secondary-200": "#1e4285",
 
-  "--ternary-100": "#081b35",
+  "--ternary-100": "#07162c",
 
   "--accent-100": "#7da2e8",
   "--accent-200": "#97b5ed",
   "--accent-300": "#b1c7f1",
 
-  "--negative-100": "#c32222",
-  "--negative-200": "#d02525",
-  "--negative-300": "#da2b2b",
+  "--negative-100": "#c33",
+  "--negative-200": "#cf3f3f",
+  "--negative-300": "#d24b4b",
 
-  "--positive-100": "#178245",
-  "--positive-200": "#198f4c",
-  "--positive-300": "#1c9c53",
+  "--positive-100": "#29a35e",
+  "--positive-200": "#2caf65",
+  "--positive-300": "#2fbc6c",
 
   "--word-100": "#EFEEF6"
 }
