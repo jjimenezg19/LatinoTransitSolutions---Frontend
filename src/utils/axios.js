@@ -39,7 +39,11 @@ axios.interceptors.request.use(
 
 axios.interceptors.response.use(
   ({ data }) => {
-    return data
+    if (data.ok) {
+      return data.data
+    } else {
+      return Promise.reject(data.error)
+    }
   },
   (error) => {
     if (error?.response) {
