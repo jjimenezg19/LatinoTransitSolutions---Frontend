@@ -4,15 +4,21 @@ import Input from "../../components/form/Input"
 import Select from "../../components/form/Select"
 import FormActions from "../../components/form/FormActions"
 import ConfirmationModal from "../../components/display/ConfirmationModal"
+import { axios } from "../../utils/axios.js"
 
 export default function CreateTransport() {
-  const DEFAULT_DATA = { id: null, type: "walking", name: "", max_width: 0, max_height: 0, max_length: 0, max_weight: 0, plate: "" }
+  const DEFAULT_DATA = { id: null, type: "walking", name: "", maxWidth: 0, maxHeight: 0, maxLength: 0, maxWeight: 0, plate: "" }
 
   const [transportData, setTransportData] = useState(DEFAULT_DATA)
+  const [transportsList, setTransportsList] = useState([])
   const [idTransportDelete, setIdTransportDelete] = useState(0)
   const [isEditMode, setIsEditMode] = useState(false)
   const [isOpen, setIsOpen] = useState(false)
   const [loading, setLoading] = useState(false)
+
+  useEffect(() => {
+    getTransportsList()
+  }, [])
 
   useEffect(() => {
     if (!isOpen) {
@@ -24,133 +30,13 @@ export default function CreateTransport() {
     { text: "ID", scope: "id" },
     { text: "Type", scope: "type" },
     { text: "Name", scope: "name" },
-    { text: "Max width", scope: "max_width" },
-    { text: "Max height", scope: "max_height" },
-    { text: "Max length", scope: "max_length" },
-    { text: "Max weight", scope: "max_weight" },
+    { text: "Max width", scope: "maxWidth" },
+    { text: "Max height", scope: "maxHeight" },
+    { text: "Max length", scope: "maxLength" },
+    { text: "Max weight", scope: "maxWeight" },
     { text: "Plate", scope: "plate" },
     { text: "Actions", scope: null }
   ]
-
-  const [data, setData] = useState([
-    {
-      id: "1",
-      type: "pickup",
-      name: "Toyota",
-      max_width: 10,
-      max_height: 20,
-      max_length: 30,
-      plate: "ABC123",
-      max_weight: 40
-    },
-    {
-      id: "2",
-      type: "motorcycle",
-      name: "Bajaj",
-      max_width: 10,
-      max_height: 20,
-      max_length: 30,
-      plate: "ABC123",
-      max_weight: 40
-    },
-    {
-      id: "3",
-      type: "truck",
-      name: "Hyunday",
-      max_width: 10,
-      max_height: 20,
-      max_length: 30,
-      plate: "ABC123",
-      max_weight: 40
-    },
-    {
-      id: "4",
-      type: "walking",
-      name: "Harold",
-      max_width: 10,
-      max_height: 20,
-      max_length: 30,
-      max_weight: 40
-    },
-    {
-      id: "1",
-      type: "pickup",
-      name: "Toyota",
-      max_width: 10,
-      max_height: 20,
-      max_length: 30,
-      plate: "ABC123",
-      max_weight: 40
-    },
-    {
-      id: "2",
-      type: "motorcycle",
-      name: "Bajaj",
-      max_width: 10,
-      max_height: 20,
-      max_length: 30,
-      plate: "ABC123",
-      max_weight: 40
-    },
-    {
-      id: "3",
-      type: "truck",
-      name: "Hyunday",
-      max_width: 10,
-      max_height: 20,
-      max_length: 30,
-      plate: "ABC123",
-      max_weight: 40
-    },
-    {
-      id: "4",
-      type: "walking",
-      name: "Harold",
-      max_width: 10,
-      max_height: 20,
-      max_length: 30,
-      max_weight: 40
-    },
-    {
-      id: "1",
-      type: "pickup",
-      name: "Toyota",
-      max_width: 10,
-      max_height: 20,
-      max_length: 30,
-      plate: "ABC123",
-      max_weight: 40
-    },
-    {
-      id: "2",
-      type: "motorcycle",
-      name: "Bajaj",
-      max_width: 10,
-      max_height: 20,
-      max_length: 30,
-      plate: "ABC123",
-      max_weight: 40
-    },
-    {
-      id: "3",
-      type: "truck",
-      name: "Hyunday",
-      max_width: 10,
-      max_height: 20,
-      max_length: 30,
-      plate: "ABC123",
-      max_weight: 40
-    },
-    {
-      id: "4",
-      type: "walking",
-      name: "Harold",
-      max_width: 10,
-      max_height: 20,
-      max_length: 30,
-      max_weight: 40
-    }
-  ])
 
   const transportsOptions = [
     { text: "Walking", value: "walking" },
@@ -177,11 +63,15 @@ export default function CreateTransport() {
   const onConfirmDeleteRow = () => {
     setLoading(true)
 
-    setTimeout(() => {
-      console.log(`Row with id #${idTransportDelete} deleted`)
-      setIsOpen(false)
-      setLoading(false)
-    }, 1000)
+    axios
+      .delete("/transport/delete", { data: { id: idTransportDelete } })
+      .then(() => {
+        getTransportsList()
+      })
+      .finally(() => {
+        setIsOpen(false)
+        setLoading(false)
+      })
   }
 
   const onCancelUpdate = () => {
@@ -192,16 +82,25 @@ export default function CreateTransport() {
   const onConfirm = () => {
     setLoading(true)
 
-    setTimeout(() => {
-      if (isEditMode) {
-        console.log("Row updated")
-      } else {
-        setData((oldval) => [...oldval, transportData])
+    if (isEditMode) {
+      axios.put("/transport/update", transportData).then(() => {
         setTransportData(DEFAULT_DATA)
-      }
+        getTransportsList()
+        setLoading(false)
+      })
+    } else {
+      axios.post("/transport/create", transportData).then(() => {
+        setTransportData(DEFAULT_DATA)
+        getTransportsList()
+        setLoading(false)
+      })
+    }
+  }
 
-      setLoading(false)
-    }, 1000)
+  const getTransportsList = () => {
+    axios.get("/transport/all").then((response) => {
+      setTransportsList(response)
+    })
   }
 
   return (
@@ -215,17 +114,17 @@ export default function CreateTransport() {
         <div className="w-full grid lg:grid-cols-2 gap-1 md:gap-y-2 md:gap-x-4">
           <Select value={transportData.type} onUpdateValue={(val) => onUpdateTransportData("type", val)} label="Type" placeholder="Select type" options={transportsOptions}></Select>
           <Input value={transportData.name} onUpdateValue={(val) => onUpdateTransportData("name", val)} label="Name" placeholder="Enter transport name"></Input>
-          <Input value={transportData.max_width} onUpdateValue={(val) => onUpdateTransportData("max_width", val)} label="Max width" placeholder="Enter max width"></Input>
-          <Input value={transportData.max_height} onUpdateValue={(val) => onUpdateTransportData("max_height", val)} label="Max height" placeholder="Enter max height"></Input>
-          <Input value={transportData.max_length} onUpdateValue={(val) => onUpdateTransportData("max_length", val)} label="Max length" placeholder="Enter max length"></Input>
-          <Input value={transportData.max_weight} onUpdateValue={(val) => onUpdateTransportData("max_weight", val)} label="Max weight" placeholder="Enter max weight"></Input>
+          <Input value={transportData.maxWidth} onUpdateValue={(val) => onUpdateTransportData("maxWidth", val)} label="Max width" placeholder="Enter max width"></Input>
+          <Input value={transportData.maxHeight} onUpdateValue={(val) => onUpdateTransportData("maxHeight", val)} label="Max height" placeholder="Enter max height"></Input>
+          <Input value={transportData.maxLength} onUpdateValue={(val) => onUpdateTransportData("maxLength", val)} label="Max length" placeholder="Enter max length"></Input>
+          <Input value={transportData.maxWeight} onUpdateValue={(val) => onUpdateTransportData("maxWeight", val)} label="Max weight" placeholder="Enter max weight"></Input>
           {transportData.type !== "walking" ? <Input value={transportData.plate} onUpdateValue={(val) => onUpdateTransportData("plate", val)} label="Plate" placeholder="Enter transport plate"></Input> : null}
         </div>
 
         <FormActions loading={loading} target="transport" isEditMode={isEditMode} onCancel={onCancelUpdate} onConfirm={onConfirm}></FormActions>
       </div>
 
-      <Table onUpdate={onUpdateRow} onDelete={onDeleteRow} className="w-full md:max-w-[900px] shrink-0 grow-0 md:shrink md:grow md:max-h-full pb-2" heads={heads} data={data} actions={["update", "delete", "goto"]}></Table>
+      <Table onUpdate={onUpdateRow} onDelete={onDeleteRow} heads={heads} data={transportsList} actions={["update", "delete", "duplicate"]} className="w-full md:max-w-[900px] shrink-0 grow-0 md:shrink md:grow md:max-h-full pb-2"></Table>
 
       <ConfirmationModal loading={loading} width="500" open={isOpen} onCancel={() => setIsOpen(false)} onConfirm={onConfirmDeleteRow}>
         <p className="text-lg md:text-xl font-bold">Are you sure to delete the transport with id #{idTransportDelete}?</p>
