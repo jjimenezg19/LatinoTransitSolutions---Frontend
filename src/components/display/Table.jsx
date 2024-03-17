@@ -1,7 +1,19 @@
 import Button from "../form/Button"
 
-export default function Table({ heads, data, actions, className, onUpdate, onDelete, onGoto, onClickRow }) {
-  actions = actions || ["update", "delete", "goto"]
+export default function Table({ heads, data, actions, className, onUpdate, onDelete, onDuplicate, onClickRow }) {
+  actions = actions || []
+
+  heads = heads || []
+
+  const buttons = [
+    { color: "positive", icon: "fas fa-pen", type: "update", callback: onUpdate },
+    { color: "negative", icon: "fas fa-trash", type: "delete", callback: onDelete },
+    { color: "primary", icon: "fas fa-clone", type: "duplicate", callback: onDuplicate }
+  ].filter((b) => actions.includes(b.type))
+
+  if (buttons.length) {
+    heads.push({ text: "Actions", scope: null })
+  }
 
   return (
     <div className={className + " relative overflow-x-auto h-fit"}>
@@ -26,23 +38,24 @@ export default function Table({ heads, data, actions, className, onUpdate, onDel
                     {row[head.scope]}
                   </td>
                 ))}
-              <td scope="row" className="flex px-3 py-2 justify-center gap-2">
-                {actions?.includes("update") ? (
-                  <Button onClick={() => onUpdate({ index, row })} type="outlined" size="xs" color="positive">
-                    <i className="fas fa-pen"></i>
-                  </Button>
-                ) : null}
-                {actions?.includes("delete") ? (
-                  <Button onClick={() => onDelete({ index, row })} type="outlined" size="xs" color="negative">
-                    <i className="fas fa-trash"></i>
-                  </Button>
-                ) : null}
-                {actions?.includes("goto") ? (
-                  <Button onClick={() => onGoto({ index, row })} type="outlined" size="xs">
-                    <i className="fas fa-share"></i>
-                  </Button>
-                ) : null}
-              </td>
+              {buttons.length ? (
+                <td scope="row" className="flex px-3 py-2 justify-center gap-2">
+                  {buttons.map(({ color, icon, callback }, indexButton) => (
+                    <Button
+                      key={indexButton}
+                      onClick={(e) => {
+                        e.stopPropagation()
+                        callback({ index, row })
+                      }}
+                      type="outlined"
+                      size="xs"
+                      color={color}
+                    >
+                      <i className={icon}></i>
+                    </Button>
+                  ))}
+                </td>
+              ) : null}
             </tr>
           ))}
         </tbody>

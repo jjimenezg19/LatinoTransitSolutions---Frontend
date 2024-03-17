@@ -34,8 +34,7 @@ export default function CreateTransport() {
     { text: "Max height", scope: "maxHeight" },
     { text: "Max length", scope: "maxLength" },
     { text: "Max weight", scope: "maxWeight" },
-    { text: "Plate", scope: "plate" },
-    { text: "Actions", scope: null }
+    { text: "Plate", scope: "plate" }
   ]
 
   const transportsOptions = [
@@ -83,17 +82,25 @@ export default function CreateTransport() {
     setLoading(true)
 
     if (isEditMode) {
-      axios.put("/transport/update", transportData).then(() => {
-        setTransportData(DEFAULT_DATA)
-        getTransportsList()
-        setLoading(false)
-      })
+      axios
+        .put("/transport/update", transportData)
+        .then(() => {
+          setTransportData(DEFAULT_DATA)
+          getTransportsList()
+        })
+        .finally(() => {
+          setLoading(false)
+        })
     } else {
-      axios.post("/transport/create", transportData).then(() => {
-        setTransportData(DEFAULT_DATA)
-        getTransportsList()
-        setLoading(false)
-      })
+      axios
+        .post("/transport/create", transportData)
+        .then(() => {
+          setTransportData(DEFAULT_DATA)
+          getTransportsList()
+        })
+        .finally(() => {
+          setLoading(false)
+        })
     }
   }
 
