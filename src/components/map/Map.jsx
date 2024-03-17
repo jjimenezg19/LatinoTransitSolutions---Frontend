@@ -4,11 +4,11 @@ import Button from "../form/Button.jsx"
 
 const MAP_CENTER = { lat: 9.902832813099959, lng: -84.10007357597351 }
 
-export default function Map({ route, readonly, controls, onUpdateMarkers, onUpdateRouteDetails }) {
+export default function Map({ mapId, route, readonly, controls, className, onUpdateMarkers, onUpdateRouteDetails }) {
   controls = controls || false
 
   const [map, setMap] = useState(null)
-  const [markers, setMarkers] = useState([])
+  const [markers, setMarkers] = useState({})
   const [hasRoute, setHasRoute] = useState(false)
   const [directionsRenderer, setDirectionsRenderer] = useState(null)
   const [directionsService, setDirectionsService] = useState(null)
@@ -26,6 +26,7 @@ export default function Map({ route, readonly, controls, onUpdateMarkers, onUpda
 
   useEffect(() => {
     onUpdateMarkers(markers)
+    console.log(markers)
   }, [markers])
 
   useEffect(() => {
@@ -35,8 +36,8 @@ export default function Map({ route, readonly, controls, onUpdateMarkers, onUpda
   }, [map, route])
 
   const initMap = (Map, Marker) => {
-    const map = new Map(document.getElementById("map"), {
-      mapId: "latinotransitsolutions-map",
+    const map = new Map(document.getElementById(mapId), {
+      mapId: `latinotransitsolutions-${mapId}`,
       zoom: 12,
       center: MAP_CENTER
     })
@@ -45,7 +46,7 @@ export default function Map({ route, readonly, controls, onUpdateMarkers, onUpda
 
     if (!readonly) {
       map.addListener("click", ({ latLng: position }) => {
-        if (markers.origin && markers.destination) return
+        if (markers.origin && markers.destination) return null
 
         setMarkers((oldval) => {
           const target = oldval.origin ? "destination" : "origin"
@@ -58,7 +59,6 @@ export default function Map({ route, readonly, controls, onUpdateMarkers, onUpda
           })
 
           const { lat, lng } = marker.position
-          console.log({ lat, lng })
 
           return { ...oldval, [target]: { marker, lat, lng } }
         })
@@ -121,7 +121,7 @@ export default function Map({ route, readonly, controls, onUpdateMarkers, onUpda
 
   return (
     <div className="flex flex-col gap-4">
-      <div id="map" className="shrink-0 grow-0 w-200 h-100"></div>
+      <div id={mapId} className={`${className} min-w-150 min-h-75`}></div>
 
       {controls && (
         <div className="flex gap-3">
