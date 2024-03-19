@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import { googleLoader } from "../../utils/google.js"
 import Button from "../form/Button.jsx"
 
@@ -9,6 +9,7 @@ export default function Map({ mapId, route, readonly, controls, className, onUpd
 
   const [map, setMap] = useState(null)
   const [markers, setMarkers] = useState({})
+  const markersRef = useRef(markers)
   const [hasRoute, setHasRoute] = useState(false)
   const [directionsRenderer, setDirectionsRenderer] = useState(null)
   const [directionsService, setDirectionsService] = useState(null)
@@ -26,7 +27,7 @@ export default function Map({ mapId, route, readonly, controls, className, onUpd
 
   useEffect(() => {
     onUpdateMarkers(markers)
-    console.log(markers)
+    markersRef.current = markers
   }, [markers])
 
   useEffect(() => {
@@ -46,7 +47,7 @@ export default function Map({ mapId, route, readonly, controls, className, onUpd
 
     if (!readonly) {
       map.addListener("click", ({ latLng: position }) => {
-        if (markers.origin && markers.destination) return null
+        if (markersRef.current.origin && markersRef.current.destination) return null
 
         setMarkers((oldval) => {
           const target = oldval.origin ? "destination" : "origin"
