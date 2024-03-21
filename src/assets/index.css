@@ -18,7 +18,7 @@
 
   body,
   #root {
-    @apply h-screen w-full m-0 p-0 box-border overflow-hidden text-base font-normal bg-ternary-100 text-word-100;
+    @apply h-screen w-full m-0 p-0 box-border overflow-hidden text-base font-normal bg-background-100 text-word-100;
   }
 
   h1,
@@ -90,7 +90,7 @@
 
   input,
   select {
-    @apply px-2 outline-none rounded-md bg-secondary-100 text-word-100 w-full border-2 border-secondary-100 hover:border-accent-100 focus:border-accent-200;
+    @apply px-2 outline-none rounded-md bg-background-200 text-word-100 w-full border-2 border-background-200 hover:border-accent-100 focus:border-accent-200;
     @apply h-8 text-sm;
     @apply md:h-10 md:text-base;
   }

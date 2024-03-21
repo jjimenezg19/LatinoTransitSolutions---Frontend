@@ -4,28 +4,28 @@ import plugin from "tailwindcss/plugin"
 const spacing = reduce(Array.from(Array(201).keys()), (carry, key) => ({ ...carry, [key]: `${key * 0.25}rem` }), {})
 
 const customColors = {
-  "--primary-100": "#d96826",
-  "--primary-200": "#db7133",
-  "--primary-300": "#dd7a40",
+  "--background-100": "#181d25",
+  "--background-200": "#213345",
+  "--background-300": "#253d56",
 
-  "--secondary-100": "#152d5b",
-  "--secondary-200": "#1e4285",
+  "--primary-100": "#d17505",
+  "--primary-200": "#e07e06",
+  "--primary-300": "#ef8606",
 
-  "--ternary-100": "#07162c",
+  "--accent-100": "#4da6ff",
+  "--accent-200": "#5cadff",
+  "--accent-300": "#6bb5ff",
 
-  "--accent-100": "#7da2e8",
-  "--accent-200": "#97b5ed",
-  "--accent-300": "#b1c7f1",
+  "--negative-100": "#c63939",
+  "--negative-200": "#c94545",
+  "--negative-300": "#cd5151",
 
-  "--negative-100": "#c33",
-  "--negative-200": "#cf3f3f",
-  "--negative-300": "#d24b4b",
+  "--positive-100": "#1f9352",
+  "--positive-200": "#22a059",
+  "--positive-300": "#25ad5f",
 
-  "--positive-100": "#29a35e",
-  "--positive-200": "#2caf65",
-  "--positive-300": "#2fbc6c",
-
-  "--word-100": "#EFEEF6"
+  "--word-100": "#e4e6ff",
+  "--word-200": "#9fa2c6"
 }
 
 const colors = Object.entries(mapKeys(customColors, (_, key) => key.replace("--", ""))).reduce((acc, [key, value]) => {

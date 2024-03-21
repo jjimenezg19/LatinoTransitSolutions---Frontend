@@ -27,9 +27,9 @@ export default function App() {
   }
 
   return (
-    <main className="w-full h-full flex flex-col">
-      <header className="w-full h-12 shrink-0 grow-0 flex justify-between items-center bg-secondary-100 px-8">
-        <div className="block md:hidden"></div>
+    <main className="w-full h-full flex flex-col items-center">
+      <header className="w-full h-12 shrink-0 grow-0 flex justify-between items-center bg-background-200 px-8">
+        <div></div>
         <nav className="shrink-0 grow-0 flex justify-center items-center">
           <ul className="hidden md:flex w-full gap-8 justify-center items-center text-base">
             {clientRoutes.map(({ name, path }, index) => (
@@ -46,7 +46,7 @@ export default function App() {
         </Button>
       </header>
 
-      <section className="w-full h-full shrink grow overflow-y-auto md:scrollgutter-edges px-2 py-2 md:py-4">
+      <section className="max-w-[1600px] w-full h-full shrink grow overflow-y-auto md:scrollgutter-edges px-2 py-2 md:py-4">
         <Outlet />
       </section>
     </main>

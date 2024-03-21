@@ -115,7 +115,7 @@ export default function CreateTransport() {
       <div id="transportForm" className="w-full max-w-2xl shrink-0 grow-0 md:shrink md:grow md:max-h-full flex flex-col items-center m-auto gap-3 md:gap-6 overflow-y-auto md:pr-2">
         <div className="w-full flex flex-col gap-2">
           <h3 className="text-2xl md:text-4xl font-bold">Register transport</h3>
-          <p className="text-sm md:text-base text-word/70">Please fill in the form below to register your transport.</p>
+          <p className="text-sm md:text-base text-word-200">Please fill in the form below to register your transport.</p>
         </div>
 
         <div className="w-full grid lg:grid-cols-2 gap-1 md:gap-y-2 md:gap-x-4">

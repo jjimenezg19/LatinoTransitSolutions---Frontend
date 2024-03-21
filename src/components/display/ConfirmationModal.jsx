@@ -7,7 +7,7 @@ export default function ConfirmationModal({ open, width, height, loading, classN
       <div className="w-full h-full flex flex-col gap-4">
         <div className="w-full h-full shrink grow">{children}</div>
         <div className="w-full flex justify-between shrink-0 grow-0">
-          <Button disabled={loading} onClick={onCancel} color="negative" type="outlined">
+          <Button disabled={loading} onClick={onCancel} color="negative">
             Cancel
           </Button>
           <Button disabled={loading} onClick={onConfirm} color="positive">
