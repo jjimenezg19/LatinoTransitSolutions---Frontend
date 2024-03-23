@@ -28,8 +28,10 @@ export default function App() {
 
   return (
     <main className="w-full h-full flex flex-col items-center">
-      <header className="w-full h-12 shrink-0 grow-0 flex justify-between items-center bg-background-200 px-8">
-        <div></div>
+      <div className="hidden md:block absolute w-full h-25 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-primary-100 via-transparent to-transparent pointer-events-none"></div>
+
+      <header className="relative w-full h-12 shrink-0 grow-0 flex justify-between items-center bg-background-200 px-4 md:px-8">
+        <img className="w-20 md:w-25" src="/images/logo.webp" alt="Logo de Latino Transit Solutions" />
         <nav className="shrink-0 grow-0 flex justify-center items-center">
           <ul className="menu hidden md:flex w-full gap-8 justify-center items-center text-base text-word-200">
             {clientRoutes.map(({ name, path }, index) => (
@@ -46,7 +48,7 @@ export default function App() {
         </Button>
       </header>
 
-      <section className="max-w-[1600px] w-full h-full shrink grow overflow-y-auto md:scrollgutter-edges px-2 py-2 md:py-4">
+      <section className="max-w-[1600px] w-full h-full shrink grow overflow-y-auto md:scrollgutter-edges p-2 md:p-4">
         <Outlet />
       </section>
     </main>
