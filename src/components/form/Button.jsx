@@ -10,14 +10,14 @@ export default function Button({ size, type, color, disabled, children, onClick 
   }
 
   const buttonColors = {
-    regular: `bg-${color}-100 border-transparent hover:bg-${color}-200 active:bg-${color}-300 text-word-100`,
+    regular: `bg-${color}-100 border-transparent hover:bg-${color}-200 active:bg-${color}-300 text-buttonword-100`,
     outlined: `bg-trasparent border-${color}-100 text-${color}-100 hover:border-${color}-200 hover:text-${color}-200 active:border-${color}-300 active:text-${color}-300`,
-    flat: `bg-transparent border-transparent text-${color}-100 hover:bg-${color}-100/30 active:bg-${color}-100/20`,
+    flat: `bg-transparent border-transparent text-${color}-100 hover:bg-${color}-100/20 active:bg-${color}-100/30`,
     disabled: `bg-${color}-100/50 border-transparent text-word-100/50 !cursor-not-allowed`
   }
 
   return (
-    <button disabled={disabled} onClick={onClick} className={`${buttonSizes[size]} ${buttonColors[type]} cursor-pointer rounded-md border-2`}>
+    <button disabled={disabled} onClick={onClick} className={`${buttonSizes[size]} ${buttonColors[type]} cursor-pointer rounded-md border-2 font-semibold`}>
       {children}
     </button>
   )

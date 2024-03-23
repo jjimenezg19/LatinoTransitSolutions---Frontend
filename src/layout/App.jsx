@@ -31,17 +31,17 @@ export default function App() {
       <header className="w-full h-12 shrink-0 grow-0 flex justify-between items-center bg-background-200 px-8">
         <div></div>
         <nav className="shrink-0 grow-0 flex justify-center items-center">
-          <ul className="hidden md:flex w-full gap-8 justify-center items-center text-base">
+          <ul className="menu hidden md:flex w-full gap-8 justify-center items-center text-base text-word-200">
             {clientRoutes.map(({ name, path }, index) => (
               <li key={index}>
-                <NavLink to={path} className={({ isActive }) => (isActive ? "text-primary-100" : "") + " hover:text-primary-100 font-bold"}>
+                <NavLink to={path} className={({ isActive }) => (isActive ? "active" : "")}>
                   {name}
                 </NavLink>
               </li>
             ))}
           </ul>
         </nav>
-        <Button type="flat" onClick={logout}>
+        <Button size="sm" type="flat" onClick={logout}>
           Log out
         </Button>
       </header>

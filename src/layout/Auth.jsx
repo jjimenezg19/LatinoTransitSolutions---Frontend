@@ -16,8 +16,16 @@ export default function App() {
   return (
     <main className="w-full h-full flex flex-col">
       <header className="w-full h-12 shrink-0 grow-0 flex justify-end items-center gap-4 bg-slate-800 px-8">
-        {pathname !== "/login" ? <Button onClick={() => navigate("/login")}>Log in</Button> : null}
-        {pathname !== "/signup" ? <Button onClick={() => navigate("/signup")}>Sign in</Button> : null}
+        {pathname !== "/login" ? (
+          <Button size="sm" onClick={() => navigate("/login")}>
+            Log in
+          </Button>
+        ) : null}
+        {pathname !== "/signup" ? (
+          <Button size="sm" onClick={() => navigate("/signup")}>
+            Sign in
+          </Button>
+        ) : null}
       </header>
 
       <section className="w-full h-full shrink grow overflow-y-auto scrollgutter-edges pt-4">

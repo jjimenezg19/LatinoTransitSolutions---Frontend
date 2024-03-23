@@ -52,7 +52,7 @@ export default function SignUp() {
 
   return (
     <section className="w-full h-full flex items-center px-2">
-      <div className="flex flex-col gap-4 rounded-xl sm:border-2 shadow-md p-3 sm:p-6 max-w-100 m-auto">
+      <div className="flex flex-col gap-4 rounded-xl sm:border-2 border-primary-100/60 shadow-md p-3 sm:p-6 max-w-100 m-auto">
         <header className="flex flex-col gap-1">
           <h3 className="whitespace-nowrap tracking-tight text-2xl font-bold">Sign up</h3>
           <p className="text-slate-400">Enter your information to create an account</p>
@@ -65,7 +65,7 @@ export default function SignUp() {
           <Input label="Password" placeholder="**********" value={dataForm.password} error={dataFormError.password} onUpdateValue={(val) => updateDataForm("password", val)} type="password"></Input>
           <Input label="Company" placeholder="Enter your company" value={dataForm.company} error={dataFormError.company} onUpdateValue={(val) => updateDataForm("company", val)}></Input>
 
-          {error ? <span className="text-red-500 text-center h-6 block">{error}</span> : null}
+          {error ? <span className="text-negative-100 text-center h-6 block">{error}</span> : null}
         </div>
 
         <Button onClick={validateFields}>Sign up</Button>
