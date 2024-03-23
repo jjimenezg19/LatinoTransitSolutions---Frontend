@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react"
 import Table from "../../components/display/Table"
 import Input from "../../components/form/Input"
+import InputNumber from "../../components/form/InputNumber"
 import Select from "../../components/form/Select"
 import FormActions from "../../components/form/FormActions"
 import ConfirmationModal from "../../components/display/ConfirmationModal"
@@ -121,10 +122,10 @@ export default function CreateTransport() {
         <div className="w-full grid lg:grid-cols-2 gap-1 md:gap-y-2 md:gap-x-4">
           <Select value={transportData.type} onUpdateValue={(val) => onUpdateTransportData("type", val)} label="Type" placeholder="Select type" options={transportsOptions}></Select>
           <Input value={transportData.name} onUpdateValue={(val) => onUpdateTransportData("name", val)} label="Name" placeholder="Enter transport name"></Input>
-          <Input value={transportData.maxWidth} onUpdateValue={(val) => onUpdateTransportData("maxWidth", val)} label="Max width" placeholder="Enter max width"></Input>
-          <Input value={transportData.maxHeight} onUpdateValue={(val) => onUpdateTransportData("maxHeight", val)} label="Max height" placeholder="Enter max height"></Input>
-          <Input value={transportData.maxLength} onUpdateValue={(val) => onUpdateTransportData("maxLength", val)} label="Max length" placeholder="Enter max length"></Input>
-          <Input value={transportData.maxWeight} onUpdateValue={(val) => onUpdateTransportData("maxWeight", val)} label="Max weight" placeholder="Enter max weight"></Input>
+          <InputNumber value={transportData.maxWidth} onUpdateValue={(val) => onUpdateTransportData("maxWidth", val)} label="Max width" placeholder="Enter max width" min="0"></InputNumber>
+          <InputNumber value={transportData.maxHeight} onUpdateValue={(val) => onUpdateTransportData("maxHeight", val)} label="Max height" placeholder="Enter max height" min="0"></InputNumber>
+          <InputNumber value={transportData.maxLength} onUpdateValue={(val) => onUpdateTransportData("maxLength", val)} label="Max length" placeholder="Enter max length" min="0"></InputNumber>
+          <InputNumber value={transportData.maxWeight} onUpdateValue={(val) => onUpdateTransportData("maxWeight", val)} label="Max weight" placeholder="Enter max weight" min="0"></InputNumber>
           {transportData.type !== "walking" ? <Input value={transportData.plate} onUpdateValue={(val) => onUpdateTransportData("plate", val)} label="Plate" placeholder="Enter transport plate"></Input> : null}
         </div>
 
