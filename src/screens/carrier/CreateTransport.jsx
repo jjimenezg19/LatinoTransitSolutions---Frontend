@@ -12,7 +12,7 @@ export default function CreateTransport() {
 
   const [transportData, setTransportData] = useState(DEFAULT_DATA)
   const [transportsList, setTransportsList] = useState([])
-  const [idTransportDelete, setIdTransportDelete] = useState(0)
+  const [transportDelete, setTransportDelete] = useState(0)
   const [isEditMode, setIsEditMode] = useState(false)
   const [isOpen, setIsOpen] = useState(false)
   const [loading, setLoading] = useState(false)
@@ -23,7 +23,7 @@ export default function CreateTransport() {
 
   useEffect(() => {
     if (!isOpen) {
-      setIdTransportDelete(0)
+      setTransportDelete(0)
     }
   }, [isOpen])
 
@@ -56,7 +56,7 @@ export default function CreateTransport() {
   }
 
   const onDeleteRow = ({ row }) => {
-    setIdTransportDelete(row.id)
+    setTransportDelete(row)
     setIsOpen(true)
   }
 
@@ -64,7 +64,7 @@ export default function CreateTransport() {
     setLoading(true)
 
     axios
-      .delete("/transport/delete", { data: { id: idTransportDelete } })
+      .delete("/transport/delete", { data: { id: transportDelete.id } })
       .then(() => {
         getTransportsList()
       })
@@ -135,8 +135,11 @@ export default function CreateTransport() {
       <Table onUpdate={onUpdateRow} onDelete={onDeleteRow} heads={heads} data={transportsList} actions={["update", "delete", "duplicate"]} className="w-full md:max-w-[900px] shrink-0 grow-0 md:shrink md:grow md:max-h-full pb-2"></Table>
 
       <ConfirmationModal loading={loading} width="500" open={isOpen} onCancel={() => setIsOpen(false)} onConfirm={onConfirmDeleteRow}>
-        <p className="text-lg md:text-xl font-bold">Are you sure to delete the transport with id #{idTransportDelete}?</p>
-        <p className="text-sm md:text-base">This action cannot be reversed</p>
+        <p className="text-lg md:text-xl font-bold">Delete transport {transportDelete.name}</p>
+        <p className="text-sm md:text-base">Are you sure to delete the transport with id #{transportDelete.id}?</p>
+        <p className="text-sm md:text-sm font-bold text-orange-400 mt-4">
+          <i className="fas fa-warning"></i> This action cannot be reversed
+        </p>
       </ConfirmationModal>
     </section>
   )

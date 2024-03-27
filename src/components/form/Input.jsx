@@ -1,10 +1,10 @@
-export default function Input({ label, value, type, placeholder, error, onUpdateValue }) {
+export default function Input({ label, value, type, disabled, readonly, placeholder, error, noHint, className, onUpdateValue }) {
   return (
-    <div className="lts-component flex flex-col gap-1">
-      <label className="font-medium leading-none">{label}</label>
+    <div className={`${className} lts-component flex flex-col gap-1`}>
+      {label && <label className="font-medium leading-none">{label}</label>}
       <div className="w-full">
-        <input value={value} onInput={({ target }) => onUpdateValue(target.value)} className={error ? "border-negative-100" : ""} placeholder={placeholder} type={type} />
-        <span className="error text-negative-100 text-right block">{error}</span>
+        <input value={value} onInput={({ target }) => (!disabled && !readonly ? onUpdateValue(target.value) : null)} className={`${error ? "!border-negative-100" : ""}`} placeholder={placeholder} type={type} disabled={disabled} readOnly={readonly} />
+        {!noHint && <span className="error text-negative-100 text-right block">{error}</span>}
       </div>
     </div>
   )

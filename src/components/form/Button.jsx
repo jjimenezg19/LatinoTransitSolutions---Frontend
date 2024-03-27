@@ -1,4 +1,4 @@
-export default function Button({ size, type, color, disabled, children, onClick }) {
+export default function Button({ size, type, color, disabled, readonly, className, children, onClick }) {
   size = size || "md"
   type = disabled ? "disabled" : type || "regular"
   color = color || "primary"
@@ -10,14 +10,14 @@ export default function Button({ size, type, color, disabled, children, onClick 
   }
 
   const buttonColors = {
-    regular: `bg-${color}-100 border-transparent hover:bg-${color}-200 active:bg-${color}-300 text-buttonword-100`,
-    outlined: `bg-trasparent border-${color}-100 text-${color}-100 hover:border-${color}-200 hover:text-${color}-200 active:border-${color}-300 active:text-${color}-300`,
-    flat: `bg-transparent border-transparent text-${color}-100 hover:bg-${color}-100/20 active:bg-${color}-100/30`,
-    disabled: `bg-${color}-100/50 border-transparent text-word-100/50 !cursor-not-allowed`
+    regular: `bg-${color}-100 border-transparent text-buttonword-100 ${!readonly ? `hover:bg-${color}-200 active:bg-${color}-300 cursor-pointer` : ""}`,
+    outlined: `bg-trasparent border-${color}-100 text-${color}-100 ${!readonly ? `hover:border-${color}-200 hover:text-${color}-200 active:border-${color}-300 active:text-${color}-300 cursor-pointer` : ""}`,
+    flat: `bg-transparent border-transparent text-${color}-100 ${!readonly ? `hover:bg-${color}-100/20 active:bg-${color}-100/30 cursor-pointer` : ""}`,
+    disabled: `bg-${color}-100/50 border-transparent text-buttonword-100/70 cursor-not-allowed`
   }
 
   return (
-    <button disabled={disabled} onClick={onClick} className={`${buttonSizes[size]} ${buttonColors[type]} cursor-pointer rounded-md border-2 font-semibold`}>
+    <button disabled={disabled || readonly} onClick={!disabled && !readonly ? onClick : null} className={`${buttonSizes[size]} ${buttonColors[type]} ${className} flex justify-center items-center rounded-md border-2 font-semibold`}>
       {children}
     </button>
   )

@@ -31,6 +31,7 @@ const customColors2 = {
   "--background-100": "#14171D",
   "--background-200": "#282F3D",
   "--background-300": "#3c475d",
+  "--background-400": "#46536d",
 
   "--primary-100": "#23b290",
   "--primary-200": "#26c09c",

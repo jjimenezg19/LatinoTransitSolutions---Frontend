@@ -3,7 +3,7 @@ import Modal from "./Modal"
 
 export default function ConfirmationModal({ open, width, height, loading, className, children, onCancel, onConfirm }) {
   return (
-    <Modal width={width} height={height} open={open} className={className} hideCloseButton onClose={onCancel}>
+    <Modal width={width} height={height} open={open} className={className} onClose={onCancel} closeButton={false} persistent>
       <div className="w-full h-full flex flex-col gap-4">
         <div className="w-full h-full shrink grow">{children}</div>
         <div className="w-full flex justify-between shrink-0 grow-0">

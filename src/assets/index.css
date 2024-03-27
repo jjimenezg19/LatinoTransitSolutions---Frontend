@@ -55,58 +55,67 @@
 }
 
 @layer utilities {
-  .scrollgutter-auto {
-    scrollbar-gutter: auto;
-  }
-  .scrollgutter-stable {
-    scrollbar-gutter: stable;
-  }
   .scrollgutter-edges {
     scrollbar-gutter: stable both-edges;
-  }
-  .scrollgutter-inherit {
-    scrollbar-gutter: inherit;
-  }
-  .scrollgutter-initial {
-    scrollbar-gutter: initial;
-  }
-  .scrollgutter-revert {
-    scrollbar-gutter: revert;
-  }
-  .scrollgutter-revertlayer {
-    scrollbar-gutter: revert-layer;
-  }
-  .scrollgutter-unset {
-    scrollbar-gutter: unset;
   }
 }
 
 @layer components {
   /* ---------------------- Input and Select ---------------------- */
-  label {
+  .lts-component label {
     @apply text-sm;
     @apply md:text-base;
   }
 
   .lts-component input,
   .lts-component select {
-    @apply px-2 outline-none rounded-md bg-background-200 text-word-100 w-full border-2 border-background-200 hover:border-primary-100 focus:border-primary-200;
+    @apply px-2 outline-none rounded-md bg-background-200 text-word-100 w-full border-2 border-background-200;
     @apply h-8 text-sm;
     @apply md:h-10 md:text-base;
   }
+  .lts-component input:not([disabled]):not([readonly]),
+  .lts-component select:not([disabled]):not([readonly]) {
+    @apply hover:border-primary-100 focus:border-primary-200;
+  }
+  .lts-component input:disabled,
+  .lts-component select:disabled {
+    @apply opacity-100 bg-background-400 border-background-400 text-word-300 cursor-not-allowed;
+  }
 
-  .lts-component span.error,
   .lts-component span.error {
     @apply text-xs h-4;
     @apply md:text-sm md:h-5;
   }
 
+  /* ---------------------- Modalbox animation ---------------------- */
   .modalOpen {
     animation: modalFadeIn 0.25s ease-in-out;
   }
 
   .modalClose {
     animation: modalFadeOut 0.25s ease-in-out;
+  }
+
+  @keyframes modalFadeIn {
+    from {
+      opacity: 0;
+      transform: scale(0.7);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+
+  @keyframes modalFadeOut {
+    from {
+      opacity: 1;
+      transform: scale(1);
+    }
+    to {
+      opacity: 0;
+      transform: scale(0.7);
+    }
   }
 }
 
@@ -118,28 +127,7 @@
   overflow: hidden !important;
 }
 
-@keyframes modalFadeIn {
-  from {
-    opacity: 0;
-    transform: scale(0.7);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1);
-  }
-}
-
-@keyframes modalFadeOut {
-  from {
-    opacity: 1;
-    transform: scale(1);
-  }
-  to {
-    opacity: 0;
-    transform: scale(0.7);
-  }
-}
-
+/* ---------------------- Navbar animation ---------------------- */
 .menu li a {
   position: relative;
   font-weight: 600;
