@@ -5,8 +5,6 @@ export default function InputNumber({ label, value, disabled, readonly, placehol
   min = min ? Number(min) : null
   max = max ? Number(max) : null
 
-  let interval = null
-
   if (min !== null && value < min) {
     value = min
     onUpdateValue(value)

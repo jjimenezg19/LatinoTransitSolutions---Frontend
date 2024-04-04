@@ -1,14 +1,15 @@
 import Button from "../form/Button"
 
-export default function Table({ heads, data, actions, className, onUpdate, onDelete, onDuplicate, onClickRow }) {
+export default function Table({ heads, data, actions, className, onTableAction, onClickRow }) {
   actions = actions || []
 
   heads = heads || []
 
   const buttons = [
-    { color: "positive", icon: "fas fa-pen", type: "update", callback: onUpdate },
-    { color: "negative", icon: "fas fa-trash", type: "delete", callback: onDelete },
-    { color: "primary", icon: "fas fa-clone", type: "duplicate", callback: onDuplicate }
+    { color: "positive", icon: "fas fa-pen", type: "update" },
+    { color: "negative", icon: "fas fa-trash", type: "delete" },
+    { color: "primary", icon: "fas fa-clone", type: "duplicate" },
+    { color: "primary", icon: "fas fa-check", type: "approve" }
   ].filter((b) => actions.includes(b.type))
 
   if (buttons.length) {
@@ -40,12 +41,12 @@ export default function Table({ heads, data, actions, className, onUpdate, onDel
                 ))}
               {buttons.length ? (
                 <td scope="row" className="flex px-3 py-2 justify-center gap-2">
-                  {buttons.map(({ color, icon, callback }, indexButton) => (
+                  {buttons.map(({ color, icon, type }, indexButton) => (
                     <Button
                       key={indexButton}
                       onClick={(e) => {
                         e.stopPropagation()
-                        callback({ index, row })
+                        onTableAction({ index, type, row })
                       }}
                       type="outlined"
                       size="xs"

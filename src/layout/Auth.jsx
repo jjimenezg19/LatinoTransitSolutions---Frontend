@@ -23,7 +23,7 @@ export default function App() {
         ) : null}
         {pathname !== "/signup" ? (
           <Button size="sm" onClick={() => navigate("/signup")}>
-            Sign in
+            Sign up
           </Button>
         ) : null}
       </header>

@@ -19,7 +19,7 @@ export default function AboutUs() {
   const navigate = useNavigate()
 
   const login = () => {
-    simpleAxios.post("/auth/login", { username: email, password }).then(({ ok, data }) => {
+    simpleAxios.post("/auth/login", { email, password }).then(({ ok, data }) => {
       if (ok) {
         localStorage.setItem("auth_token", AES.encrypt(data.token, TOKEN_ENCRYPT))
         navigate("/home")
