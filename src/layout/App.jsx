@@ -1,6 +1,7 @@
 import { useEffect } from "react"
 import { Outlet, NavLink } from "react-router-dom"
 import { useNavigate } from "react-router-dom"
+import { ToastContainer } from "react-toastify"
 
 import Button from "../components/form/Button"
 
@@ -53,6 +54,8 @@ export default function App() {
       <section className="max-w-[1600px] w-full h-full shrink grow overflow-y-auto md:scrollgutter-edges p-2 md:p-4">
         <Outlet />
       </section>
+
+      <ToastContainer autoClose={5000} closeOnClick pauseOnHover theme="dark" />
     </main>
   )
 }

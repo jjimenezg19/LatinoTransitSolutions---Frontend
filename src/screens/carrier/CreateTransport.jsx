@@ -1,18 +1,20 @@
 import { useEffect, useState } from "react"
+import { axios } from "../../utils/axios.js"
+import { notify } from "../../utils/notify.js"
+
 import Table from "../../components/display/Table"
 import Input from "../../components/form/Input"
 import InputNumber from "../../components/form/InputNumber"
 import Select from "../../components/form/Select"
 import FormActions from "../../components/form/FormActions"
 import ConfirmationModal from "../../components/display/ConfirmationModal"
-import { axios } from "../../utils/axios.js"
 
 export default function CreateTransport() {
   const DEFAULT_DATA = { id: null, type: "walking", name: "", maxWidth: 0, maxHeight: 0, maxLength: 0, maxWeight: 0, plate: "" }
 
   const [transportData, setTransportData] = useState(DEFAULT_DATA)
   const [transportsList, setTransportsList] = useState([])
-  const [transportDelete, setTransportDelete] = useState(0)
+  const [transportDelete, setTransportDelete] = useState({})
   const [isEditMode, setIsEditMode] = useState(false)
   const [isOpen, setIsOpen] = useState(false)
   const [loading, setLoading] = useState(false)
@@ -46,17 +48,30 @@ export default function CreateTransport() {
   ]
 
   const onUpdateTransportData = (key, value) => {
-    setTransportData((oldval) => ({ ...oldval, [key]: value }))
+    setTransportData((oldvalue) => ({ ...oldvalue, [key]: value }))
   }
 
-  const onUpdateRow = ({ row }) => {
+  const onTableAction = ({ type, row }) => {
+    switch (type) {
+      case "update":
+        onUpdateRow(row)
+        break
+      case "delete":
+        onDeleteRow(row)
+        break
+      case "duplicate":
+        break
+    }
+  }
+
+  const onUpdateRow = (data) => {
     setIsEditMode(true)
-    setTransportData(row)
+    setTransportData(data)
     document.getElementById("transportForm").scrollIntoView({ behavior: "smooth" })
   }
 
-  const onDeleteRow = ({ row }) => {
-    setTransportDelete(row)
+  const onDeleteRow = (data) => {
+    setTransportDelete(data)
     setIsOpen(true)
   }
 
@@ -66,11 +81,21 @@ export default function CreateTransport() {
     axios
       .delete("/transport/delete", { data: { id: transportDelete.id } })
       .then(() => {
+        notify("Transport deleted successfully", "success")
         getTransportsList()
+
+        if (transportDelete.id === transportData.id) {
+          setIsEditMode(false)
+          setTransportData(DEFAULT_DATA)
+        }
+      })
+      .catch(() => {
+        notify("There was an error deleting the transport", "error")
       })
       .finally(() => {
         setIsOpen(false)
         setLoading(false)
+        setTransportDelete({})
       })
   }
 
@@ -86,18 +111,27 @@ export default function CreateTransport() {
       axios
         .put("/transport/update", transportData)
         .then(() => {
+          notify("Transport updated successfully", "success")
           setTransportData(DEFAULT_DATA)
           getTransportsList()
         })
+        .catch(() => {
+          notify("There was an error updating the transport", "error")
+        })
         .finally(() => {
           setLoading(false)
+          setIsEditMode(false)
         })
     } else {
       axios
         .post("/transport/create", transportData)
         .then(() => {
+          notify("Transport created successfully", "success")
           setTransportData(DEFAULT_DATA)
           getTransportsList()
+        })
+        .catch(() => {
+          notify("There was an error creating the transport", "error")
         })
         .finally(() => {
           setLoading(false)
@@ -132,7 +166,7 @@ export default function CreateTransport() {
         <FormActions loading={loading} target="transport" isEditMode={isEditMode} onCancel={onCancelUpdate} onConfirm={onConfirm}></FormActions>
       </div>
 
-      <Table onUpdate={onUpdateRow} onDelete={onDeleteRow} heads={heads} data={transportsList} actions={["update", "delete", "duplicate"]} className="w-full md:max-w-[900px] shrink-0 grow-0 md:shrink md:grow md:max-h-full pb-2"></Table>
+      <Table heads={heads} data={transportsList} onTableAction={onTableAction} actions={["update", "delete", "duplicate"]} className="w-full md:max-w-[900px] shrink-0 grow-0 md:shrink md:grow md:max-h-full pb-2"></Table>
 
       <ConfirmationModal loading={loading} width="500" open={isOpen} onCancel={() => setIsOpen(false)} onConfirm={onConfirmDeleteRow}>
         <p className="text-lg md:text-xl font-bold">Delete transport {transportDelete.name}</p>

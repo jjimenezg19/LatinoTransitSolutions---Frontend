@@ -154,3 +154,7 @@
 .menu li a:hover::before {
   transform: scaleX(1);
 }
+
+.Toastify__toast {
+  background-color: var(--background-100) !important;
+}
