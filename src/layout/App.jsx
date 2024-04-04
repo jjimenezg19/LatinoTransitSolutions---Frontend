@@ -1,6 +1,7 @@
 import { useEffect } from "react"
 import { Outlet, NavLink } from "react-router-dom"
 import { useNavigate } from "react-router-dom"
+
 import Button from "../components/form/Button"
 
 export default function App() {
@@ -31,7 +32,8 @@ export default function App() {
       <div className="hidden md:block absolute w-full h-25 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-primary-100 via-transparent to-transparent pointer-events-none"></div>
 
       <header className="relative w-full h-12 shrink-0 grow-0 flex justify-between items-center bg-background-200 px-4 md:px-8">
-        <img className="w-20 md:w-25" src="/images/logo.webp" alt="Logo de Latino Transit Solutions" />
+        <img className="hidden md:inline w-32" src="/images/logo.webp" alt="Logo de Latino Transit Solutions" />
+        <img className="md:hidden w-10" src="/images/lts.svg" alt="Logo de Latino Transit Solutions" />
         <nav className="shrink-0 grow-0 flex justify-center items-center">
           <ul className="menu hidden md:flex w-full gap-8 justify-center items-center text-base text-word-200">
             {clientRoutes.map(({ name, path }, index) => (
