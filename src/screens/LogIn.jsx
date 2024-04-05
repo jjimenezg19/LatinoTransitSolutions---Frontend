@@ -1,15 +1,17 @@
 import { useState } from "react"
 import { Link, useNavigate } from "react-router-dom"
-
-import Input from "../components/form/Input.jsx"
-
 import { AES } from "crypto-js"
 import { simpleAxios } from "../utils/axios.js"
+import { useSystemStore } from "../stores/system.js"
+
+import Input from "../components/form/Input.jsx"
 import Button from "../components/form/Button.jsx"
 
 const TOKEN_ENCRYPT = import.meta.env.VITE_TOKEN_ENCRYPT
 
 export default function AboutUs() {
+  const { setCurrentUser } = useSystemStore()
+
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const [error, setError] = useState(null)
@@ -22,6 +24,8 @@ export default function AboutUs() {
     simpleAxios.post("/auth/login", { email, password }).then(({ ok, data }) => {
       if (ok) {
         localStorage.setItem("auth_token", AES.encrypt(data.token, TOKEN_ENCRYPT))
+        localStorage.setItem("current_session", data.user.id)
+        setCurrentUser(data.user)
         navigate("/home")
       } else {
         setError("There's something wrong")

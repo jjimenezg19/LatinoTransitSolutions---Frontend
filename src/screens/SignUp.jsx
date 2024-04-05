@@ -1,16 +1,19 @@
 import { useState } from "react"
 import { Link, useNavigate } from "react-router-dom"
+import { AES } from "crypto-js"
+import { simpleAxios } from "../utils/axios.js"
+import { useSystemStore } from "../stores/system.js"
 
 import Input from "../components/form/Input"
 import Select from "../components/form/Select"
-
-import { simpleAxios } from "../utils/axios.js"
 import Button from "../components/form/Button.jsx"
 
 const TOKEN_ENCRYPT = import.meta.env.VITE_TOKEN_ENCRYPT
 
 export default function SignUp() {
-  const [dataForm, setDataForm] = useState({})
+  const { setCurrentUser } = useSystemStore()
+
+  const [dataForm, setDataForm] = useState({ role: "client", name: "", email: "", password: "", company: "" })
   const [dataFormError, setDataFormError] = useState({})
   const [error, setError] = useState(null)
 
@@ -36,6 +39,8 @@ export default function SignUp() {
     simpleAxios.post("/auth/signup", dataForm).then(({ ok, data }) => {
       if (ok) {
         localStorage.setItem("auth_token", AES.encrypt(data.token, TOKEN_ENCRYPT))
+        localStorage.setItem("current_session", data.user.id)
+        setCurrentUser(data.user)
         navigate("/home")
       } else {
         setError("There's something wrong")
@@ -59,7 +64,7 @@ export default function SignUp() {
         </header>
 
         <div className="flex flex-col gap-1">
-          <Select label="User type" placeholder="Select an user type" value={dataForm.usertype} error={dataFormError.usertype} onUpdateValue={(val) => updateDataForm("usertype", val)} options={options}></Select>
+          <Select label="User type" placeholder="Select an user type" value={dataForm.role} error={dataFormError.role} onUpdateValue={(val) => updateDataForm("role", val)} options={options}></Select>
           <Input label="Name" placeholder="Enter your name" value={dataForm.name} error={dataFormError.name} onUpdateValue={(val) => updateDataForm("name", val)}></Input>
           <Input label="Email" placeholder="m@example.com" value={dataForm.email} error={dataFormError.email} onUpdateValue={(val) => updateDataForm("email", val)} type="email"></Input>
           <Input label="Password" placeholder="**********" value={dataForm.password} error={dataFormError.password} onUpdateValue={(val) => updateDataForm("password", val)} type="password"></Input>

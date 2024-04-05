@@ -4,7 +4,7 @@ import App from "../layout/App.jsx"
 
 import SentPackages from "../screens/checker/SentPackages.jsx"
 
-export default function SystemRouter() {
+export default function CheckerRouter() {
   return (
     <Routes>
       <Route path="/" element={<App />}>

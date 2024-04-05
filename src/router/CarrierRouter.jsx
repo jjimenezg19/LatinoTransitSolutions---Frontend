@@ -4,7 +4,7 @@ import App from "../layout/App.jsx"
 
 import CreateTransport from "../screens/carrier/CreateTransport.jsx"
 
-export default function SystemRouter() {
+export default function CarrierRouter() {
   return (
     <Routes>
       <Route path="/" element={<App />}>

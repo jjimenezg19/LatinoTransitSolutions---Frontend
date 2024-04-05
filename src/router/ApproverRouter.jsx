@@ -4,7 +4,7 @@ import App from "../layout/App.jsx"
 
 import RequestsRoutes from "../screens/approver/RequestsRoutes.jsx"
 
-export default function SystemRouter() {
+export default function ApproverRouter() {
   return (
     <Routes>
       <Route path="/" element={<App />}>

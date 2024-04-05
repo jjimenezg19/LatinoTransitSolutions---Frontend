@@ -7,7 +7,7 @@ import MapRoutes from "../screens/client/Routes.jsx"
 import Packages from "../screens/client/Packages.jsx"
 import CreateTrip from "../screens/client/CreateTrip.jsx"
 
-export default function SystemRouter() {
+export default function ClientRouter() {
   return (
     <Routes>
       <Route path="/" element={<App />}>
@@ -17,5 +17,11 @@ export default function SystemRouter() {
         <Route path="trip" element={<CreateTrip />} />
       </Route>
     </Routes>
+    // <>
+    //   <Route path="home" element={<Home />} />
+    //   <Route path="routes" element={<MapRoutes />} />
+    //   <Route path="packages" element={<Packages />} />
+    //   <Route path="trip" element={<CreateTrip />} />
+    // </>
   )
 }
