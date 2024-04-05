@@ -1,19 +1,33 @@
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom"
+import { RouterProvider, createBrowserRouter, Navigate } from "react-router-dom"
 import { useSystemStore } from "../stores/system.js"
 import { useEffect } from "react"
 import { isEmpty } from "lodash"
 import { axios } from "../utils/axios.js"
 
-import AuthRouter from "./AuthRouter.jsx"
-import ClientRouter from "./ClientRouter.jsx"
-import ApproverRouter from "./ApproverRouter.jsx"
-import CheckerRouter from "./CheckerRouter.jsx"
-import CarrierRouter from "./CarrierRouter.jsx"
+import authRouter from "./AuthRouter.jsx"
+import clientRouter from "./ClientRouter.jsx"
+import approverRouter from "./ApproverRouter.jsx"
+import checkerRouter from "./CheckerRouter.jsx"
+import carrierRouter from "./CarrierRouter.jsx"
+
 import App from "../layout/App.jsx"
-import MapRoutes from "../screens/client/Routes.jsx"
-import Packages from "../screens/client/Packages.jsx"
-import CreateTrip from "../screens/client/CreateTrip.jsx"
+import Auth from "../layout/Auth.jsx"
 import Home from "../screens/Home.jsx"
+
+const getAllowedRoutes = (currentUser) => {
+  switch (currentUser.role) {
+    case "client":
+      return clientRouter
+    case "carrier":
+      return carrierRouter
+    case "approver":
+      return approverRouter
+    case "checker":
+      return checkerRouter
+    default:
+      return []
+  }
+}
 
 export default function Router() {
   const { currentUser, setCurrentUser } = useSystemStore()
@@ -28,34 +42,28 @@ export default function Router() {
     }
   }, [])
 
-  let router = null
-
-  if (!isEmpty(currentUser)) {
-    switch (currentUser.role) {
-      case "client":
-        router = <ClientRouter />
-        break
-      case "carrier":
-        router = <CarrierRouter />
-        break
-      case "approver":
-        router = <ApproverRouter />
-        break
-      case "checker":
-        router = <CheckerRouter />
-        break
+  const router = createBrowserRouter([
+    {
+      path: "/",
+      element: <Auth />,
+      children: authRouter
+    },
+    {
+      path: "/",
+      element: <App />,
+      children: [
+        ...getAllowedRoutes(currentUser),
+        {
+          path: "home",
+          element: <Home />
+        }
+      ]
+    },
+    {
+      path: "*",
+      element: <Navigate to="/home" />
     }
-  }
-  return (
-    <BrowserRouter>
-      <AuthRouter></AuthRouter>
-      {router}
-      <Routes>
-        <Route path="/" element={<App />}>
-          <Route path="home" element={<Home />} />
-        </Route>
-        {/* <Routes path="*" element={<Navigate to="/home" />} /> */}
-      </Routes>
-    </BrowserRouter>
-  )
+  ])
+
+  return (!isEmpty(currentUser) || (isEmpty(currentUser) && !localStorage.getItem("current_session"))) && <RouterProvider router={router} />
 }
