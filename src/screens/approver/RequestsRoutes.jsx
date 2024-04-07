@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react"
 import { axios } from "../../utils/axios.js"
 import { notify } from "../../utils/notify.js"
+import { isEmpty } from "lodash"
+import { Popover } from "flowbite-react"
 
 import Map from "../../components/map/Map"
 import Table from "../../components/display/Table"
 import ConfirmationModal from "../../components/display/ConfirmationModal"
-import { isEmpty } from "lodash"
 
 export default function CreateRoute() {
   const [route, setRoute] = useState({})
@@ -27,8 +28,8 @@ export default function CreateRoute() {
 
   const heads = [
     { text: "ID", scope: "id" },
-    { text: "Type", scope: "type" },
-    { text: "Name", scope: "name" }
+    { text: "Name", scope: "name" },
+    { text: "Type", scope: "type" }
   ]
 
   const onSetRoute = ({ row }) => {
@@ -84,41 +85,41 @@ export default function CreateRoute() {
       </div>
 
       <div className="w-full md:max-w-[900px] flex flex-col gap-2 shrink grow">
-        <Table heads={heads} data={routesList} onClickRow={onSetRoute} onTableAction={onTableAction} actions={["approve"]} className="w-full h-full shrink grow"></Table>
-        <div className="bg-background-200 w-full h-full rounded-xl p-4 flex flex-col gap-3">
+        <Table className="h-full shrink grow" heads={heads} data={routesList} onClickRow={onSetRoute} onTableAction={onTableAction} actions={["approve"]}></Table>
+        <div className="bg-background-200 w-full h-full shrink grow rounded-xl p-4 flex flex-col gap-3">
           {!isEmpty(routeDetails) ? (
             <>
               <h6 className="font-bold">Route</h6>
               <div className="grid grid-cols-2 gap-2">
                 <div className="flex flex-col justify-center bg-background-100 rounded-xl py-2 px-4 text-sm">
-                  <p className="font-semibold">Name</p>
-                  <p>{routeDetails.name}</p>
+                  <p className="font-semibold text-primary-100">Name</p>
+                  <p className="h-10">{routeDetails.name}</p>
                 </div>
                 <div className="flex flex-col justify-center bg-background-100 rounded-xl py-2 px-4 text-sm">
-                  <p className="font-semibold">Description</p>
-                  <p>{routeDetails.description}</p>
+                  <p className="font-semibold text-primary-100">Description</p>
+                  <p className="h-10 line-clamp-2">{routeDetails.description}</p>
                 </div>
                 <div className="flex flex-col justify-center bg-background-100 rounded-xl py-2 px-4 text-sm">
-                  <p className="font-semibold">Type</p>
-                  <p>{routeDetails.type}</p>
+                  <p className="font-semibold text-primary-100">Type</p>
+                  <p className="h-10">{routeDetails.type}</p>
                 </div>
                 <div className="flex flex-col justify-center bg-background-100 rounded-xl py-2 px-4 text-sm">
-                  <p className="font-semibold">Price</p>
-                  <p>{routeDetails.price}</p>
+                  <p className="font-semibold text-primary-100">Price</p>
+                  <p className="h-10">₡{routeDetails.price}</p>
                 </div>
               </div>
               <h6 className="font-bold">Transport</h6>
               <div>
-                <p>Trannsport info</p>
+                <p>Transport info</p>
               </div>
             </>
           ) : (
-            <div className="text-2xl font-semibold text-center">Choose a route to see its informations</div>
+            <div className="w-full h-full text-2xl font-semibold text-center flex justify-center items-center">Choose a route to see its informations</div>
           )}
         </div>
       </div>
 
-      <ConfirmationModal loading={loading} width="500" open={isOpen} onCancel={() => setIsOpen(false)} onConfirm={onConfirmApproveRoute}>
+      <ConfirmationModal loading={loading} width="500" open={isOpen} onCancel={setIsOpen} onConfirm={onConfirmApproveRoute}>
         <p className="text-lg md:text-xl font-bold">Approve route {routeApprove.name}</p>
         <p className="text-sm md:text-base">Are you sure to approve the route with id #{routeApprove.id}?</p>
       </ConfirmationModal>
