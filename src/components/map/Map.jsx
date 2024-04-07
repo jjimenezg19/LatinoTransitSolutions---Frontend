@@ -26,8 +26,10 @@ export default function Map({ mapId, route, readonly, controls, className, onUpd
   }, [])
 
   useEffect(() => {
-    onUpdateMarkers(markers)
-    markersRef.current = markers
+    if (onUpdateMarkers) {
+      onUpdateMarkers(markers)
+      markersRef.current = markers
+    }
   }, [markers])
 
   useEffect(() => {
@@ -85,7 +87,9 @@ export default function Map({ mapId, route, readonly, controls, className, onUpd
         destinations: [destination]
       })
       .then((response) => {
-        onUpdateRouteDetails(response.rows[0].elements[0])
+        if (onUpdateRouteDetails) {
+          onUpdateRouteDetails(response.rows[0].elements[0])
+        }
       })
 
     directionsService
@@ -108,9 +112,11 @@ export default function Map({ mapId, route, readonly, controls, className, onUpd
   const onResetMap = () => {
     directionsRenderer.setDirections({ routes: [] })
     setHasRoute(false)
-    onUpdateRouteDetails({})
     map.setZoom(12)
     map.setCenter(MAP_CENTER)
+    if (onUpdateRouteDetails) {
+      onUpdateRouteDetails({})
+    }
   }
 
   const onClearMarkers = () => {
@@ -121,7 +127,7 @@ export default function Map({ mapId, route, readonly, controls, className, onUpd
   }
 
   return (
-    <div className="flex flex-col gap-4">
+    <div className="w-full h-full flex flex-col gap-4">
       <div id={mapId} className={`${className} min-w-150 min-h-75`}></div>
 
       {controls && (
