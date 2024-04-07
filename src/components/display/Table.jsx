@@ -1,9 +1,9 @@
 import Button from "../form/Button"
 
-export default function Table({ heads, data, actions, className, onTableAction, onClickRow }) {
+export default function Table({ heads, data, actions, placeholder, className, onTableAction, onClickRow }) {
   actions = actions || []
-
   heads = heads || []
+  placeholder = placeholder || "No info to show"
 
   const buttons = [
     { color: "positive", icon: "fas fa-pen", type: "update" },
@@ -17,19 +17,19 @@ export default function Table({ heads, data, actions, className, onTableAction, 
   }
 
   return (
-    <div className={className + " relative overflow-x-auto h-fit"}>
-      <table className="w-full text-base text-center text-word-100 shadow-md md:rounded-lg overflow-hidden">
+    <div className={`${className} w-full relative overflow-auto bg-background-200 shadow-md md:rounded-lg`}>
+      <table className="w-full text-base text-center text-word-100 overflow-auto">
         <thead className="text-xs uppercase bg-background-300 sticky top-0">
           <tr>
             {heads.map((head, index) => (
-              <th key={"th_" + index} scope="col" className="px-3 py-2">
+              <th key={"th_" + index} className="px-3 py-2">
                 {head.text}
               </th>
             ))}
           </tr>
         </thead>
 
-        <tbody className="h-full overflow-y-auto">
+        <tbody>
           {data.map((row, index) => (
             <tr onClick={() => (onClickRow ? onClickRow({ index, row }) : null)} key={"body_row_" + index} className={`${onClickRow ? "cursor-pointer" : ""} bg-background-200 hover:bg-background-200/60`}>
               {heads
