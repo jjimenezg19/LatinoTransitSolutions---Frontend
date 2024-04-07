@@ -25,7 +25,7 @@ export default function CreateTransport() {
 
   useEffect(() => {
     if (!isOpen) {
-      setTransportDelete(0)
+      setTransportDelete({})
     }
   }, [isOpen])
 
