@@ -33,10 +33,10 @@ export default function Router() {
   const { currentUser, setCurrentUser } = useSystemStore()
 
   useEffect(() => {
-    const currentUserId = localStorage.getItem("current_session")
+    const id = localStorage.getItem("current_session")
 
     if (isEmpty(currentUser) && currentUserId) {
-      axios.get(`/user/get-by-id?id=${currentUserId}`).then((user) => {
+      axios.get("/user/get-by-id", { id }).then((user) => {
         setCurrentUser(user)
       })
     }

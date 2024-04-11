@@ -9,7 +9,7 @@ export default function Table({ heads, data, actions, placeholder, className, on
     { color: "positive", icon: "fas fa-pen", type: "update" },
     { color: "negative", icon: "fas fa-trash", type: "delete" },
     { color: "primary", icon: "fas fa-clone", type: "duplicate" },
-    { color: "primary", icon: "fas fa-check", type: "approve" }
+    { color: "positive", icon: "fas fa-check", type: "approve" }
   ].filter((b) => actions.includes(b.type))
 
   if (buttons.length) {
