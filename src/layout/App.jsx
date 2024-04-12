@@ -17,13 +17,14 @@ export default function App() {
   }, [])
 
   const clientRoutes = [
-    { name: "Packages", path: "packages", access: "client" },
     { name: "Routes", path: "routes", access: "client" },
     { name: "Trip", path: "trip", access: "client" },
+    { name: "Packages", path: "packages", access: "client" },
     { name: "Requests Routes", path: "requests-routes", access: "approver" },
-    { name: "Sent Packages", path: "sent-packages", access: "checker" },
-    { name: "Transports", path: "transports", access: "carrier" }
-  ].filter((route) => route.access === currentUser.role)
+    // { name: "Sent Packages", path: "sent-packages", access: "checker" },
+    { name: "Transports", path: "my-transports", access: "carrier" },
+    { name: "Routes", path: "my-routes", access: "carrier" }
+  ].filter((route) => route.access === currentUser.role || currentUser.role === "admin")
 
   const logout = () => {
     localStorage.removeItem("auth_token")

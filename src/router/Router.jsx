@@ -1,7 +1,7 @@
 import { RouterProvider, createBrowserRouter, Navigate } from "react-router-dom"
 import { useSystemStore } from "../stores/system.js"
 import { useEffect } from "react"
-import { isEmpty } from "lodash"
+import { isEmpty, union } from "lodash"
 import { axios } from "../utils/axios.js"
 
 import authRouter from "./AuthRouter.jsx"
@@ -24,6 +24,8 @@ const getAllowedRoutes = (currentUser) => {
       return approverRouter
     case "checker":
       return checkerRouter
+    case "admin":
+      return union(clientRouter, carrierRouter, approverRouter, checkerRouter)
     default:
       return []
   }

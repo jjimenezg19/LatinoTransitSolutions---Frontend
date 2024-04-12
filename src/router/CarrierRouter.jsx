@@ -1,8 +1,13 @@
 import CreateTransport from "../screens/carrier/CreateTransport.jsx"
+import CreateRoutes from "../screens/carrier/CreateRoutes.jsx"
 
 export default [
   {
-    path: "transports",
+    path: "my-transports",
     element: <CreateTransport />
+  },
+  {
+    path: "my-routes",
+    element: <CreateRoutes />
   }
 ]

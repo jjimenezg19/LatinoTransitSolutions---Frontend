@@ -92,21 +92,27 @@ export default function CreateRoute() {
               <div className="grid grid-cols-3 gap-2">
                 <div className="col-span-1 flex flex-col justify-center bg-background-100 rounded-xl p-4 text-sm">
                   <p className="font-semibold text-primary-100">Name</p>
-                  <p>{routeDetails.name}</p>
+                  <p className="line-clamp-1" title={routeDetails.name}>
+                    {routeDetails.name}
+                  </p>
+                </div>
+                <div className="col-span-2 flex flex-col justify-center bg-background-100 rounded-xl p-4 text-sm">
+                  <p className="font-semibold text-primary-100">Description</p>
+                  <p className="line-clamp-1" title={routeDetails.description}>
+                    {routeDetails.description}
+                  </p>
                 </div>
                 <div className="col-span-1 flex flex-col justify-center bg-background-100 rounded-xl p-4 text-sm">
                   <p className="font-semibold text-primary-100">Type</p>
                   <p className="capitalize">{routeDetails.type}</p>
                 </div>
                 <div className="col-span-1 flex flex-col justify-center bg-background-100 rounded-xl p-4 text-sm">
-                  <p className="font-semibold text-primary-100">Price</p>
-                  <p>₡{routeDetails.price}</p>
+                  <p className="font-semibold text-primary-100">Distance</p>
+                  <p>{routeDetails.distance} km</p>
                 </div>
-                <div className="col-span-3 flex flex-col justify-center bg-background-100 rounded-xl p-4 text-sm">
-                  <p className="font-semibold text-primary-100">Description</p>
-                  <p className="line-clamp-1" title={routeDetails.description}>
-                    {routeDetails.description}
-                  </p>
+                <div className="col-span-1 flex flex-col justify-center bg-background-100 rounded-xl p-4 text-sm">
+                  <p className="font-semibold text-primary-100">Price</p>
+                  <p>${routeDetails.price}</p>
                 </div>
               </div>
               <h6 className="font-bold">Transport</h6>
@@ -127,19 +133,19 @@ export default function CreateRoute() {
                   <div className="col-span-3 flex justify-between items-center bg-background-100 rounded-xl p-4 text-sm">
                     <div className="text-center">
                       <p className="font-semibold text-primary-100">Weight</p>
-                      <p>{routeDetails.transportMaxWeight} g</p>
+                      <p>{routeDetails.transportMaxWeight} kg</p>
                     </div>
                     <div className="text-center">
                       <p className="font-semibold text-primary-100">Length</p>
-                      <p>{routeDetails.transportMaxLength} cm</p>
+                      <p>{routeDetails.transportMaxLength} m</p>
                     </div>
                     <div className="text-center">
                       <p className="font-semibold text-primary-100">Height</p>
-                      <p>{routeDetails.transportMaxHeight} cm</p>
+                      <p>{routeDetails.transportMaxHeight} m</p>
                     </div>
                     <div className="text-center">
                       <p className="font-semibold text-primary-100">Width</p>
-                      <p>{routeDetails.transportMaxWidth} cm</p>
+                      <p>{routeDetails.transportMaxWidth} m</p>
                     </div>
                   </div>
                 </div>
