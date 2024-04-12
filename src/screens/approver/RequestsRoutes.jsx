@@ -33,8 +33,7 @@ export default function CreateRoute() {
   ]
 
   const onSetRoute = ({ row }) => {
-    const { latitude: startLatitude, longitude: startLongitude } = row.startPoint.coordinate
-    const { latitude: endLatitude, longitude: endLongitude } = row.endPoint.coordinate
+    const { startLatitude, startLongitude, endLatitude, endLongitude } = row
 
     setRoute({
       origin: { lat: Number(startLatitude), lng: Number(startLongitude) },
@@ -86,31 +85,64 @@ export default function CreateRoute() {
 
       <div className="w-full md:max-w-[900px] flex flex-col gap-2 shrink grow">
         <Table className="h-full shrink grow" heads={heads} data={routesList} onClickRow={onSetRoute} onTableAction={onTableAction} actions={["approve"]}></Table>
-        <div className="bg-background-200 w-full h-full shrink grow rounded-xl p-4 flex flex-col gap-3">
+        <div className="bg-background-200 w-full h-full shrink grow rounded-xl p-4 flex flex-col gap-2">
           {!isEmpty(routeDetails) ? (
             <>
               <h6 className="font-bold">Route</h6>
-              <div className="grid grid-cols-2 gap-2">
-                <div className="flex flex-col justify-center bg-background-100 rounded-xl py-2 px-4 text-sm">
+              <div className="grid grid-cols-3 gap-2">
+                <div className="col-span-1 flex flex-col justify-center bg-background-100 rounded-xl p-4 text-sm">
                   <p className="font-semibold text-primary-100">Name</p>
-                  <p className="h-10">{routeDetails.name}</p>
+                  <p>{routeDetails.name}</p>
                 </div>
-                <div className="flex flex-col justify-center bg-background-100 rounded-xl py-2 px-4 text-sm">
-                  <p className="font-semibold text-primary-100">Description</p>
-                  <p className="h-10 line-clamp-2">{routeDetails.description}</p>
-                </div>
-                <div className="flex flex-col justify-center bg-background-100 rounded-xl py-2 px-4 text-sm">
+                <div className="col-span-1 flex flex-col justify-center bg-background-100 rounded-xl p-4 text-sm">
                   <p className="font-semibold text-primary-100">Type</p>
-                  <p className="h-10">{routeDetails.type}</p>
+                  <p className="capitalize">{routeDetails.type}</p>
                 </div>
-                <div className="flex flex-col justify-center bg-background-100 rounded-xl py-2 px-4 text-sm">
+                <div className="col-span-1 flex flex-col justify-center bg-background-100 rounded-xl p-4 text-sm">
                   <p className="font-semibold text-primary-100">Price</p>
-                  <p className="h-10">₡{routeDetails.price}</p>
+                  <p>₡{routeDetails.price}</p>
+                </div>
+                <div className="col-span-3 flex flex-col justify-center bg-background-100 rounded-xl p-4 text-sm">
+                  <p className="font-semibold text-primary-100">Description</p>
+                  <p className="line-clamp-1" title={routeDetails.description}>
+                    {routeDetails.description}
+                  </p>
                 </div>
               </div>
               <h6 className="font-bold">Transport</h6>
               <div>
-                <p>Transport info</p>
+                <div className="grid grid-cols-3 gap-2">
+                  <div className="col-span-1 flex flex-col justify-center bg-background-100 rounded-xl p-4 text-sm">
+                    <p className="font-semibold text-primary-100">Name</p>
+                    <p>{routeDetails.transportName}</p>
+                  </div>
+                  <div className="col-span-1 flex flex-col justify-center bg-background-100 rounded-xl p-4 text-sm">
+                    <p className="font-semibold text-primary-100">Type</p>
+                    <p className="line-clamp-2 capitalize">{routeDetails.transportType}</p>
+                  </div>
+                  <div className="col-span-1 flex flex-col justify-center bg-background-100 rounded-xl p-4 text-sm">
+                    <p className="font-semibold text-primary-100">Plate</p>
+                    <p>{routeDetails.transportPlate || "No plate"}</p>
+                  </div>
+                  <div className="col-span-3 flex justify-between items-center bg-background-100 rounded-xl p-4 text-sm">
+                    <div className="text-center">
+                      <p className="font-semibold text-primary-100">Weight</p>
+                      <p>{routeDetails.transportMaxWeight} g</p>
+                    </div>
+                    <div className="text-center">
+                      <p className="font-semibold text-primary-100">Length</p>
+                      <p>{routeDetails.transportMaxLength} cm</p>
+                    </div>
+                    <div className="text-center">
+                      <p className="font-semibold text-primary-100">Height</p>
+                      <p>{routeDetails.transportMaxHeight} cm</p>
+                    </div>
+                    <div className="text-center">
+                      <p className="font-semibold text-primary-100">Width</p>
+                      <p>{routeDetails.transportMaxWidth} cm</p>
+                    </div>
+                  </div>
+                </div>
               </div>
             </>
           ) : (
