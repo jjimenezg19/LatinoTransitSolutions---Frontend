@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react"
 import { axios } from "../../utils/axios.js"
 import { notify } from "../../utils/notify.js"
+import { useSystemStore } from "../../stores/system.js"
 
 import Table from "../../components/display/Table"
 import Input from "../../components/form/Input"
@@ -10,6 +11,8 @@ import FormActions from "../../components/form/FormActions"
 import ConfirmationModal from "../../components/display/ConfirmationModal"
 
 export default function CreateTransport() {
+  const { currentUser } = useSystemStore()
+
   const DEFAULT_DATA = { id: null, type: "walking", name: "", maxWidth: 0, maxHeight: 0, maxLength: 0, maxWeight: 0, plate: "" }
 
   const [transportData, setTransportData] = useState(DEFAULT_DATA)
@@ -140,7 +143,7 @@ export default function CreateTransport() {
   }
 
   const getTransportsList = () => {
-    axios.get("/transport/all").then((response) => {
+    axios.get(`/transport/get-my-transports/${currentUser.id}`).then((response) => {
       setTransportsList(response)
     })
   }
