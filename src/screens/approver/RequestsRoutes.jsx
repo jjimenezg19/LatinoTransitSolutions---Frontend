@@ -2,7 +2,6 @@ import { useEffect, useState } from "react"
 import { axios } from "../../utils/axios.js"
 import { notify } from "../../utils/notify.js"
 import { isEmpty } from "lodash"
-import { Popover } from "flowbite-react"
 
 import Map from "../../components/map/Map"
 import Table from "../../components/display/Table"
