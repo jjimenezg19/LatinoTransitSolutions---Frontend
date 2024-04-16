@@ -4,7 +4,7 @@ import Button from "../form/Button.jsx"
 
 const MAP_CENTER = { lat: 9.902832813099959, lng: -84.10007357597351 }
 
-export default function Map({ mapId, route, readonly, controls, className, onUpdateMarkers, onUpdateRouteDetails }) {
+export default function Map({ mapId, route, readonly, controls, className, reset, onUpdateMarkers, onUpdateRouteDetails, onUpdateResetMap }) {
   controls = controls || false
 
   const [map, setMap] = useState(null)
@@ -21,9 +21,9 @@ export default function Map({ mapId, route, readonly, controls, className, onUpd
       setDirectionsService(new DirectionsService())
       setDistanceMatrixService(new DistanceMatrixService())
 
-      initMap(Map, AdvancedMarkerElement)
+      initMap(Map, AdvancedMarkerElement, readonly)
     })
-  }, [])
+  }, [readonly])
 
   useEffect(() => {
     if (onUpdateMarkers) {
@@ -38,7 +38,14 @@ export default function Map({ mapId, route, readonly, controls, className, onUpd
     }
   }, [map, route])
 
-  const initMap = (Map, Marker) => {
+  useEffect(() => {
+    if (reset) {
+      onResetMap()
+      onUpdateResetMap(false)
+    }
+  }, [reset])
+
+  const initMap = (Map, Marker, isReadonly) => {
     const map = new Map(document.getElementById(mapId), {
       mapId: `latinotransitsolutions-${mapId}`,
       zoom: 12,
@@ -47,7 +54,7 @@ export default function Map({ mapId, route, readonly, controls, className, onUpd
 
     setMap(map)
 
-    if (!readonly) {
+    if (!isReadonly) {
       map.addListener("click", ({ latLng: position }) => {
         if (markersRef.current.origin && markersRef.current.destination) return null
 
@@ -106,7 +113,7 @@ export default function Map({ mapId, route, readonly, controls, className, onUpd
         window.alert("Directions request failed due to " + e)
       })
 
-    onClearMarkers()
+    onClearMarkers(false)
   }
 
   const onResetMap = () => {
@@ -114,16 +121,19 @@ export default function Map({ mapId, route, readonly, controls, className, onUpd
     setHasRoute(false)
     map.setZoom(12)
     map.setCenter(MAP_CENTER)
+    onClearMarkers()
     if (onUpdateRouteDetails) {
       onUpdateRouteDetails({})
     }
   }
 
-  const onClearMarkers = () => {
+  const onClearMarkers = (force = true) => {
     markers.origin?.marker?.setMap(null)
     markers.destination?.marker?.setMap(null)
 
-    setMarkers({ origin: null, destination: null })
+    if (force) {
+      setMarkers({ origin: null, destination: null })
+    }
   }
 
   return (
