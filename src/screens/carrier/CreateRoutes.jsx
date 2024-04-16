@@ -217,6 +217,11 @@ export default function CreateRoute() {
     })
   }
 
+  const closeModal = () => {
+    setRouteSelected(null)
+    setTransportSelected(null)
+  }
+
   return (
     <section className="w-full h-full flex flex-col md:flex-row gap-10 md:gap-6 md:justify-center">
       <div id="routeForm" className="w-full max-w-2xl shrink-0 grow-0 md:shrink md:grow md:max-h-full flex flex-col items-center mx-auto md:m-auto gap-3 md:gap-6 overflow-y-auto md:pr-2">
@@ -252,7 +257,7 @@ export default function CreateRoute() {
         </p>
       </ConfirmationModal>
 
-      <Modal width="800" open={routeSelected}>
+      <Modal width="800" open={routeSelected} onClose={closeModal}>
         <div className="flex flex-col gap-4">
           <p className="text-lg md:text-xl font-bold">Assign transport to route "{routeSelected?.name}"</p>
           <div className="w-full flex items-end gap-4">
