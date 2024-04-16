@@ -59,7 +59,7 @@ export default function App() {
         <Outlet />
       </section>
 
-      <ToastContainer autoClose={5000} closeOnClick pauseOnHover theme="dark" />
+      <ToastContainer autoClose={5000} closeOnClick pauseOnHover stacked theme="dark" />
     </main>
   )
 }
