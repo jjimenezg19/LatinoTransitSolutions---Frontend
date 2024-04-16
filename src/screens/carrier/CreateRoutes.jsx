@@ -5,9 +5,13 @@ import { useSystemStore } from "../../stores/system.js"
 
 import Table from "../../components/display/Table"
 import Input from "../../components/form/Input"
+import Select from "../../components/form/Select"
+import Button from "../../components/form/Button"
 import FormActions from "../../components/form/FormActions"
 import ConfirmationModal from "../../components/display/ConfirmationModal"
+import Modal from "../../components/display/Modal"
 import Map from "../../components/map/Map"
+import { find } from "lodash"
 
 export default function CreateRoute() {
   const { currentUser } = useSystemStore()
@@ -21,6 +25,11 @@ export default function CreateRoute() {
   const [markers, setMarkers] = useState({})
   const [isEditMode, setIsEditMode] = useState(false)
   const [isOpen, setIsOpen] = useState(false)
+  const [unassignedTransportsList, setUnassignedTransportsList] = useState([])
+  const [transportOptions, setTransportOptions] = useState([])
+  const [assignedTransportsList, setAssignedTransportsList] = useState([])
+  const [transportSelected, setTransportSelected] = useState(null)
+  const [routeSelected, setRouteSelected] = useState(null)
   const [loading, setLoading] = useState(false)
   const [resetMap, setResetMap] = useState(false)
 
@@ -50,11 +59,24 @@ export default function CreateRoute() {
     }
   }, [markers])
 
+  useEffect(() => {
+    if (routeSelected) {
+      getUnassignedTransports()
+      getAssignedTransports()
+    }
+  }, [routeSelected])
+
   const heads = [
     { text: "ID", scope: "id" },
     { text: "Type", scope: "type" },
     { text: "Name", scope: "name" },
     { text: "Distance", scope: "distance" }
+  ]
+
+  const transportHeads = [
+    { text: "ID", scope: "id" },
+    { text: "Type", scope: "type" },
+    { text: "Name", scope: "name" }
   ]
 
   const onUpdateRouteData = (key, value) => {
@@ -70,6 +92,7 @@ export default function CreateRoute() {
         onDeleteRow(row)
         break
       case "transport":
+        setRouteSelected(row)
         break
     }
   }
@@ -163,9 +186,34 @@ export default function CreateRoute() {
     }
   }
 
+  const onAssignTransport = () => {
+    axios.post("/route/assign-transport", { idCarrier: currentUser.id, transport: transportSelected, route: routeSelected }).then(() => {
+      // getUnassignedTransports()
+      // getAssignedTransports()
+    })
+  }
+
+  const onSelectTransport = (value) => {
+    const transportFound = find(unassignedTransportsList, ({ id }) => id == value)
+    setTransportSelected(transportFound || null)
+  }
+
   const getRoutesList = () => {
     axios.get(`/route/get-my-routes/${currentUser.id}`).then((response) => {
       setRoutesList(response)
+    })
+  }
+
+  const getUnassignedTransports = () => {
+    axios.get(`/transport/get-my-transports/${currentUser.id}`).then((response) => {
+      setTransportOptions(response.map(({ id, name }) => ({ text: name, value: id })))
+      setUnassignedTransportsList(response)
+    })
+  }
+
+  const getAssignedTransports = () => {
+    axios.get(`/transport/get-my-transports/${currentUser.id}`).then((response) => {
+      setAssignedTransportsList(response.map(({ id, name }) => ({ text: name, value: id })))
     })
   }
 
@@ -203,6 +251,19 @@ export default function CreateRoute() {
           <i className="fas fa-warning"></i> This action cannot be reversed
         </p>
       </ConfirmationModal>
+
+      <Modal width="800" open={routeSelected}>
+        <div className="flex flex-col gap-4">
+          <p className="text-lg md:text-xl font-bold">Assign transport to route "{routeSelected?.name}"</p>
+          <div className="w-full flex items-end gap-4">
+            <Select onUpdateValue={onSelectTransport} noHint options={transportOptions} label="Transports list" placeholder="Choose a transport to assign"></Select>
+            <Button disabled={!transportSelected} onClick={onAssignTransport}>
+              Assign
+            </Button>
+          </div>
+          <Table heads={transportHeads} data={assignedTransportsList}></Table>
+        </div>
+      </Modal>
     </section>
   )
 }
