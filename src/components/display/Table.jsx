@@ -9,7 +9,8 @@ export default function Table({ heads, data, actions, placeholder, className, on
     { color: "positive", icon: "fas fa-pen", type: "update" },
     { color: "negative", icon: "fas fa-trash", type: "delete" },
     { color: "primary", icon: "fas fa-clone", type: "duplicate" },
-    { color: "positive", icon: "fas fa-check", type: "approve" }
+    { color: "positive", icon: "fas fa-check", type: "approve" },
+    { color: "warning", icon: "fas fa-car-side", type: "transport" }
   ].filter((b) => actions.includes(b.type))
 
   if (buttons.length) {
@@ -51,6 +52,7 @@ export default function Table({ heads, data, actions, placeholder, className, on
                       type="outlined"
                       size="xs"
                       color={color}
+                      squared
                     >
                       <i className={icon}></i>
                     </Button>

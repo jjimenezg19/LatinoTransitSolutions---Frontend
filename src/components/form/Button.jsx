@@ -1,12 +1,12 @@
-export default function Button({ size, type, color, disabled, readonly, className, children, onClick }) {
+export default function Button({ size, type, color, squared, disabled, readonly, className, children, onClick }) {
   size = size || "md"
   type = disabled ? "disabled" : type || "regular"
   color = color || "primary"
 
   const buttonSizes = {
-    xs: "h-6 px-1 text-xs",
-    sm: "h-6 px-1 text-xs md:h-8 md:px-2 md:text-sm",
-    md: "h-8 px-2 text-sm md:h-10 md:px-3 md:text-base"
+    xs: `h-6 text-xs ${!squared ? "px-1" : "w-6"}`,
+    sm: `h-6 text-xs md:h-8 md:text-sm ${!squared ? "px-1 md:px-2" : "w-6 md:w-8"}`,
+    md: `h-8 text-sm md:h-10 md:text-base ${!squared ? "px-2 md:px-3" : "w-8 md:w-10"}`
   }
 
   const buttonColors = {
