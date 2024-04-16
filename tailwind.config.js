@@ -45,6 +45,10 @@ const customColors2 = {
   "--positive-200": "#69a9f2",
   "--positive-300": "#77b1f3",
 
+  "--warning-100": "#efcf43",
+  "--warning-200": "#f1d55b",
+  "--warning-300": "#f3db72",
+
   "--buttonword-100": "#14171D",
 
   "--word-100": "#e4e6ff",
@@ -80,7 +84,7 @@ export default {
   ],
   safelist: [
     {
-      pattern: /(bg|border|text)-(primary|negative|positive)-(100|200|300)/,
+      pattern: /(bg|border|text)-(primary|negative|positive|warning)-(100|200|300)/,
       variants: ["hover", "active"]
     }
   ]
