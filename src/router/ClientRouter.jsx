@@ -1,5 +1,5 @@
 import Routes from "../screens/client/Routes.jsx"
-import Packages from "../screens/client/Packages.jsx"
+import CreatePackage from "../screens/client/CreatePackage.jsx"
 import CreateTrip from "../screens/client/CreateTrip.jsx"
 
 export default [
@@ -8,8 +8,8 @@ export default [
     element: <Routes />
   },
   {
-    path: "packages",
-    element: <Packages />
+    path: "my-packages",
+    element: <CreatePackage />
   },
   {
     path: "trip",
