@@ -52,6 +52,9 @@ export default function CreatePackage() {
         case "update":
           onUpdateRow(row)
           break
+        case "delete":
+          onDeleteRow(row)
+          break
         case "duplicate":
           break
       }
@@ -161,7 +164,7 @@ export default function CreatePackage() {
           <FormActions loading={loading} target="package" isEditMode={isEditMode} onCancel={onCancelUpdate} onConfirm={onConfirm}></FormActions>
         </div>
   
-        <Table heads={heads} data={packagesList} onTableAction={onTableAction} actions={["update", "delete", "duplicate"]} className="w-full md:max-w-[900px] shrink-0 grow-0 md:shrink md:grow md:max-h-full pb-2"></Table>
+        <Table heads={heads} data={packagesList} onTableAction={onTableAction} actions={["update", "delete"]} className="w-full md:max-w-[900px] shrink-0 grow-0 md:shrink md:grow md:max-h-full pb-2"></Table>
   
         <ConfirmationModal loading={loading} width="500" open={isOpen} onCancel={() => setIsOpen(false)} onConfirm={onConfirmDeleteRow}>
           <p className="text-lg md:text-xl font-bold">Delete transport {packageDelete.name}</p>
