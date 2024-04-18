@@ -188,8 +188,9 @@ export default function CreateRoute() {
 
   const onAssignTransport = () => {
     axios.post("/route/assign-transport", { idCarrier: currentUser.id, transport: transportSelected, route: routeSelected }).then(() => {
-      // getUnassignedTransports()
-      // getAssignedTransports()
+      getUnassignedTransports()
+      getAssignedTransports()
+      setTransportSelected(null)
     })
   }
 
@@ -205,15 +206,15 @@ export default function CreateRoute() {
   }
 
   const getUnassignedTransports = () => {
-    axios.get(`/transport/get-my-transports/${currentUser.id}`).then((response) => {
-      setTransportOptions(response.map(({ id, name }) => ({ text: name, value: id })))
+    axios.get(`/transport/get-my-unassigned-transports/${currentUser.id}`).then((response) => {
+      setTransportOptions(response.map(({ id, name }) => ({ text: `#${id} - ${name}`, value: id })))
       setUnassignedTransportsList(response)
     })
   }
 
   const getAssignedTransports = () => {
-    axios.get(`/transport/get-my-transports/${currentUser.id}`).then((response) => {
-      setAssignedTransportsList(response.map(({ id, name }) => ({ text: name, value: id })))
+    axios.get(`/route/get-transports-route/${routeSelected.id}`).then((response) => {
+      setAssignedTransportsList(response)
     })
   }
 
@@ -257,16 +258,16 @@ export default function CreateRoute() {
         </p>
       </ConfirmationModal>
 
-      <Modal width="800" open={routeSelected} onClose={closeModal}>
-        <div className="flex flex-col gap-4">
-          <p className="text-lg md:text-xl font-bold">Assign transport to route "{routeSelected?.name}"</p>
-          <div className="w-full flex items-end gap-4">
+      <Modal width="800" className="h-130" open={routeSelected} onClose={closeModal}>
+        <div className="flex flex-col gap-4 h-full">
+          <p className="shrink-0 grow-0 text-lg md:text-xl font-bold">Assign transport to route "{routeSelected?.name}"</p>
+          <div className="shrink-0 grow-0 w-full flex items-end gap-4">
             <Select onUpdateValue={onSelectTransport} noHint options={transportOptions} label="Transports list" placeholder="Choose a transport to assign"></Select>
             <Button disabled={!transportSelected} onClick={onAssignTransport}>
               Assign
             </Button>
           </div>
-          <Table heads={transportHeads} data={assignedTransportsList}></Table>
+          <Table className="h-10 shrink grow" heads={transportHeads} data={assignedTransportsList}></Table>
         </div>
       </Modal>
     </section>
