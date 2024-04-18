@@ -127,7 +127,7 @@ export default function CreateTransport() {
         })
     } else {
       axios
-        .post("/transport/create", transportData)
+        .post("/transport/create", { ...transportData, idCarrier: currentUser.id })
         .then(() => {
           notify("Transport created successfully", "success")
           setTransportData(DEFAULT_DATA)
