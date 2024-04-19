@@ -156,14 +156,14 @@ export default function CreateTransport() {
           <p className="text-sm md:text-base text-word-200">Please fill in the form below to register your transport.</p>
         </div>
 
-        <div className="w-full grid lg:grid-cols-2 gap-1 md:gap-y-2 md:gap-x-4">
-          <Select value={transportData.type} onUpdateValue={(val) => onUpdateTransportData("type", val)} label="Type" placeholder="Select type" options={transportsOptions}></Select>
-          <Input value={transportData.name} onUpdateValue={(val) => onUpdateTransportData("name", val)} label="Name" placeholder="Enter transport name"></Input>
-          <InputNumber value={transportData.maxWidth} onUpdateValue={(val) => onUpdateTransportData("maxWidth", val)} label="Max width (m)" placeholder="Enter max width" min="0"></InputNumber>
-          <InputNumber value={transportData.maxHeight} onUpdateValue={(val) => onUpdateTransportData("maxHeight", val)} label="Max height (m)" placeholder="Enter max height" min="0"></InputNumber>
-          <InputNumber value={transportData.maxLength} onUpdateValue={(val) => onUpdateTransportData("maxLength", val)} label="Max length (m)" placeholder="Enter max length" min="0"></InputNumber>
-          <InputNumber value={transportData.maxWeight} onUpdateValue={(val) => onUpdateTransportData("maxWeight", val)} label="Max weight (kg)" placeholder="Enter max weight" min="0"></InputNumber>
-          {transportData.type !== "walking" ? <Input value={transportData.plate} onUpdateValue={(val) => onUpdateTransportData("plate", val)} label="Plate" placeholder="Enter transport plate"></Input> : null}
+        <div className="w-full grid lg:grid-cols-2 gap-1 md:gap-y-4 md:gap-x-4">
+          <Select noHint value={transportData.type} onUpdateValue={(val) => onUpdateTransportData("type", val)} label="Type" placeholder="Select type" options={transportsOptions}></Select>
+          <Input noHint value={transportData.name} onUpdateValue={(val) => onUpdateTransportData("name", val)} label="Name" placeholder="Enter transport name"></Input>
+          <InputNumber noHint value={transportData.maxWidth} onUpdateValue={(val) => onUpdateTransportData("maxWidth", val)} label="Max width (m)" placeholder="Enter max width" min="0"></InputNumber>
+          <InputNumber noHint value={transportData.maxHeight} onUpdateValue={(val) => onUpdateTransportData("maxHeight", val)} label="Max height (m)" placeholder="Enter max height" min="0"></InputNumber>
+          <InputNumber noHint value={transportData.maxLength} onUpdateValue={(val) => onUpdateTransportData("maxLength", val)} label="Max length (m)" placeholder="Enter max length" min="0"></InputNumber>
+          <InputNumber noHint value={transportData.maxWeight} onUpdateValue={(val) => onUpdateTransportData("maxWeight", val)} label="Max weight (kg)" placeholder="Enter max weight" min="0"></InputNumber>
+          {transportData.type !== "walking" ? <Input noHint value={transportData.plate} onUpdateValue={(val) => onUpdateTransportData("plate", val)} label="Plate" placeholder="Enter transport plate"></Input> : null}
         </div>
 
         <FormActions loading={loading} target="transport" isEditMode={isEditMode} onCancel={onCancelUpdate} onConfirm={onConfirm}></FormActions>

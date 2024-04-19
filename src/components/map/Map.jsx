@@ -138,7 +138,7 @@ export default function Map({ mapId, route, readonly, controls, className, reset
 
   return (
     <div className="w-full h-full flex flex-col gap-4">
-      <div id={mapId} className={`${className} min-w-150 min-h-75`}></div>
+      <div id={mapId} className={`${className} min-w-150 min-h-75 rounded-xl`}></div>
 
       {controls && (
         <div className="flex gap-3">

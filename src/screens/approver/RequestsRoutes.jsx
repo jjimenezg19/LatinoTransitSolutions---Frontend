@@ -78,12 +78,18 @@ export default function CreateRoute() {
 
   return (
     <section className="w-full h-full flex flex-col lg:flex-row gap-10 md:gap-6 lg:justify-center">
-      <div className="w-full shrink-0 grow-0 md:shrink md:grow md:max-h-full flex flex-col items-center gap-3 md:gap-6 overflow-y-auto md:pr-2">
-        <Map mapId="requests-routes" readonly route={route} className="min-w-0 w-full h-full"></Map>
+      <div className="w-full h-full flex flex-col mx-auto gap-6">
+        <div className="w-full flex flex-col gap-2 shrink-0 grow-0">
+          <h3 className="text-2xl md:text-4xl font-bold">Routes list</h3>
+          <p className="text-sm md:text-base text-word-200">Choose a route to see its information.</p>
+        </div>
+
+        <Table className="h-full shrink grow" heads={heads} data={routesList} onClickRow={onSetRoute} onTableAction={onTableAction} actions={["approve"]}></Table>
       </div>
 
-      <div className="w-full md:max-w-[900px] flex flex-col gap-2 shrink grow">
-        <Table className="h-full shrink grow" heads={heads} data={routesList} onClickRow={onSetRoute} onTableAction={onTableAction} actions={["approve"]}></Table>
+      <div className="w-full flex flex-col gap-2">
+        <Map mapId="requests-routes" readonly route={route} className="min-w-0 w-full h-full"></Map>
+
         <div className="bg-background-200 w-full h-full shrink grow rounded-xl p-4 flex flex-col gap-2">
           {!isEmpty(routeDetails) ? (
             <>
@@ -115,40 +121,44 @@ export default function CreateRoute() {
                 </div>
               </div>
               <h6 className="font-bold">Transport</h6>
-              <div>
-                <div className="grid grid-cols-3 gap-2">
-                  <div className="col-span-1 flex flex-col justify-center bg-background-100 rounded-xl p-4 text-sm">
-                    <p className="font-semibold text-primary-100">Name</p>
-                    <p>{routeDetails.transportName}</p>
-                  </div>
-                  <div className="col-span-1 flex flex-col justify-center bg-background-100 rounded-xl p-4 text-sm">
-                    <p className="font-semibold text-primary-100">Type</p>
-                    <p className="line-clamp-2 capitalize">{routeDetails.transportType}</p>
-                  </div>
-                  <div className="col-span-1 flex flex-col justify-center bg-background-100 rounded-xl p-4 text-sm">
-                    <p className="font-semibold text-primary-100">Plate</p>
-                    <p>{routeDetails.transportPlate || "No plate"}</p>
-                  </div>
-                  <div className="col-span-3 flex justify-between items-center bg-background-100 rounded-xl p-4 text-sm">
-                    <div className="text-center">
-                      <p className="font-semibold text-primary-100">Weight</p>
-                      <p>{routeDetails.transportMaxWeight} kg</p>
+              {!isEmpty(routeDetails.transportName) ? (
+                <div>
+                  <div className="grid grid-cols-3 gap-2">
+                    <div className="col-span-1 flex flex-col justify-center bg-background-100 rounded-xl p-4 text-sm">
+                      <p className="font-semibold text-primary-100">Name</p>
+                      <p>{routeDetails.transportName}</p>
                     </div>
-                    <div className="text-center">
-                      <p className="font-semibold text-primary-100">Length</p>
-                      <p>{routeDetails.transportMaxLength} m</p>
+                    <div className="col-span-1 flex flex-col justify-center bg-background-100 rounded-xl p-4 text-sm">
+                      <p className="font-semibold text-primary-100">Type</p>
+                      <p className="line-clamp-2 capitalize">{routeDetails.transportType}</p>
                     </div>
-                    <div className="text-center">
-                      <p className="font-semibold text-primary-100">Height</p>
-                      <p>{routeDetails.transportMaxHeight} m</p>
+                    <div className="col-span-1 flex flex-col justify-center bg-background-100 rounded-xl p-4 text-sm">
+                      <p className="font-semibold text-primary-100">Plate</p>
+                      <p>{routeDetails.transportPlate || "No plate"}</p>
                     </div>
-                    <div className="text-center">
-                      <p className="font-semibold text-primary-100">Width</p>
-                      <p>{routeDetails.transportMaxWidth} m</p>
+                    <div className="col-span-3 flex justify-between items-center bg-background-100 rounded-xl p-4 text-sm">
+                      <div className="text-center">
+                        <p className="font-semibold text-primary-100">Weight</p>
+                        <p>{routeDetails.transportMaxWeight} kg</p>
+                      </div>
+                      <div className="text-center">
+                        <p className="font-semibold text-primary-100">Length</p>
+                        <p>{routeDetails.transportMaxLength} m</p>
+                      </div>
+                      <div className="text-center">
+                        <p className="font-semibold text-primary-100">Height</p>
+                        <p>{routeDetails.transportMaxHeight} m</p>
+                      </div>
+                      <div className="text-center">
+                        <p className="font-semibold text-primary-100">Width</p>
+                        <p>{routeDetails.transportMaxWidth} m</p>
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
+              ) : (
+                <div className="">This route has no any transport yet</div>
+              )}
             </>
           ) : (
             <div className="w-full h-full text-2xl font-semibold text-center flex justify-center items-center">Choose a route to see its informations</div>

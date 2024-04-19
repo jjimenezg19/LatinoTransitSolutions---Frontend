@@ -22,6 +22,7 @@ export default function CreateRoute() {
   const [routeDetails, setRouteDetails] = useState({})
   const [routesList, setRoutesList] = useState([])
   const [routeDelete, setRouteDelete] = useState({})
+  const [routeOnMap, setRouteOnMap] = useState(null)
   const [markers, setMarkers] = useState({})
   const [isEditMode, setIsEditMode] = useState(false)
   const [isOpen, setIsOpen] = useState(false)
@@ -36,6 +37,18 @@ export default function CreateRoute() {
   useEffect(() => {
     getRoutesList()
   }, [])
+
+  useEffect(() => {
+    if (routeData.id >= 1) {
+      const { latitude: startLatitude, longitude: startLongitude } = routeData.startPoint.coordinate
+      const { latitude: endLatitude, longitude: endLongitude } = routeData.endPoint.coordinate
+
+      setRouteOnMap({
+        origin: { lat: Number(startLatitude), lng: Number(startLongitude) },
+        destination: { lat: Number(endLatitude), lng: Number(endLongitude) }
+      })
+    }
+  }, [routeData])
 
   useEffect(() => {
     if (!isOpen) {
@@ -70,7 +83,7 @@ export default function CreateRoute() {
     { text: "ID", scope: "id" },
     { text: "Type", scope: "type" },
     { text: "Name", scope: "name" },
-    { text: "Distance", scope: "distance" }
+    { text: "Distance", scope: "distance", append: " km" }
   ]
 
   const transportHeads = [
@@ -187,11 +200,17 @@ export default function CreateRoute() {
   }
 
   const onAssignTransport = () => {
-    axios.post("/route/assign-transport", { idCarrier: currentUser.id, transport: transportSelected, route: routeSelected }).then(() => {
-      getUnassignedTransports()
-      getAssignedTransports()
-      setTransportSelected(null)
-    })
+    axios
+      .post("/route/assign-transport", { idCarrier: currentUser.id, transport: transportSelected, route: routeSelected })
+      .then(() => {
+        getUnassignedTransports()
+        getAssignedTransports()
+        setTransportSelected(null)
+        notify("Transport assigned successfully", "success")
+      })
+      .catch((error) => {
+        notify(error, "error")
+      })
   }
 
   const onSelectTransport = (value) => {
@@ -232,17 +251,17 @@ export default function CreateRoute() {
         </div>
 
         <div className="w-full grid lg:grid-cols-2 gap-1 md:gap-y-2 md:gap-x-4">
-          <Input value={routeData.name} onUpdateValue={(val) => onUpdateRouteData("name", val)} label="Name" placeholder="Enter route name"></Input>
-          <Input value={routeData.description} onUpdateValue={(val) => onUpdateRouteData("description", val)} label="Description" placeholder="Enter route description"></Input>
+          <Input noHint value={routeData.name} onUpdateValue={(val) => onUpdateRouteData("name", val)} label="Name" placeholder="Enter route name"></Input>
+          <Input noHint value={routeData.description} onUpdateValue={(val) => onUpdateRouteData("description", val)} label="Description" placeholder="Enter route description"></Input>
         </div>
 
-        <Map className="!min-h-70 !min-w-full" controls={!isEditMode} readonly={isEditMode} reset={resetMap} mapId="register-route" onUpdateMarkers={setMarkers} onUpdateRouteDetails={setRouteDetails} onUpdateResetMap={setResetMap}></Map>
+        <Map className="!min-h-80 !min-w-full" route={routeOnMap} controls={!isEditMode} readonly={isEditMode} reset={resetMap} mapId="register-route" onUpdateMarkers={setMarkers} onUpdateRouteDetails={setRouteDetails} onUpdateResetMap={setResetMap}></Map>
 
-        <div className="w-full grid lg:grid-cols-2 gap-1 md:gap-y-2 md:gap-x-4">
-          <Input value={routeData.startPoint.coordinate.latitude} label="Start latitude" placeholder="Choose route" readonly></Input>
-          <Input value={routeData.startPoint.coordinate.longitude} label="Start longitude" placeholder="Choose route" readonly></Input>
-          <Input value={routeData.endPoint.coordinate.latitude} label="End latitude" placeholder="Choose route" readonly></Input>
-          <Input value={routeData.endPoint.coordinate.longitude} label="End longitude" placeholder="Choose route" readonly></Input>
+        <div className="w-full grid lg:grid-cols-2 gap-1 md:gap-y-4 md:gap-x-4">
+          <Input noHint value={routeData.startPoint.coordinate.latitude} label="Start latitude" placeholder="Choose route" readonly></Input>
+          <Input noHint value={routeData.startPoint.coordinate.longitude} label="Start longitude" placeholder="Choose route" readonly></Input>
+          <Input noHint value={routeData.endPoint.coordinate.latitude} label="End latitude" placeholder="Choose route" readonly></Input>
+          <Input noHint value={routeData.endPoint.coordinate.longitude} label="End longitude" placeholder="Choose route" readonly></Input>
         </div>
 
         <FormActions loading={loading} target="route" isEditMode={isEditMode} onCancel={onCancelUpdate} onConfirm={onConfirm}></FormActions>

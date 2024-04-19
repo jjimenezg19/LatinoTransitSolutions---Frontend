@@ -32,12 +32,14 @@ export default function Table({ heads, data, actions, placeholder, className, on
 
         <tbody>
           {data.map((row, index) => (
-            <tr onClick={() => (onClickRow ? onClickRow({ index, row }) : null)} key={"body_row_" + index} className={`${onClickRow ? "cursor-pointer" : ""} bg-background-200 hover:bg-background-200/60`}>
+            <tr onClick={() => (onClickRow ? onClickRow({ index, row }) : null)} key={"body_row_" + index} className={`${onClickRow ? "cursor-pointer" : ""} bg-background-200 hover:bg-background-100/50`}>
               {heads
                 .filter((head) => head.scope)
                 .map((head, index) => (
                   <td key={"body_col_" + index} scope="row" className="px-3 py-2 font-medium whitespace-nowrap">
-                    {row[head.scope]}
+                    {head.prepend}
+                    <span className="capitalize">{row[head.scope]}</span>
+                    {head.append}
                   </td>
                 ))}
               {buttons.length ? (

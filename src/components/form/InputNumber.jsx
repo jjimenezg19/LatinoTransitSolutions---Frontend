@@ -1,7 +1,7 @@
 import Button from "./Button"
 import Input from "./Input"
 
-export default function InputNumber({ label, value, disabled, readonly, placeholder, error, min, max, onUpdateValue }) {
+export default function InputNumber({ label, value, disabled, readonly, placeholder, error, min, max, noHint, onUpdateValue }) {
   min = min ? Number(min) : null
   max = max ? Number(max) : null
 
@@ -60,7 +60,7 @@ export default function InputNumber({ label, value, disabled, readonly, placehol
             <i className="fas fa-plus"></i>
           </Button>
         </div>
-        <span className="error text-negative-100 text-right block">{error}</span>
+        {!noHint && <span className="error text-negative-100 text-right block">{error}</span>}
       </div>
     </div>
   )
