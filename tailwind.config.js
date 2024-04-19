@@ -7,6 +7,7 @@ const customColors = {
   "--background-100": "#181d25",
   "--background-200": "#213345",
   "--background-300": "#253d56",
+  "--background-400": "#3e6fa3",
 
   "--primary-100": "#d17505",
   "--primary-200": "#e07e06",
@@ -19,6 +20,10 @@ const customColors = {
   "--positive-100": "#1f9352",
   "--positive-200": "#22a059",
   "--positive-300": "#25ad5f",
+
+  "--warning-100": "#efcf43",
+  "--warning-200": "#f1d55b",
+  "--warning-300": "#f3db72",
 
   "--buttonword-100": "#e4e6ff",
 
