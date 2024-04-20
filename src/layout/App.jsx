@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { Outlet, NavLink } from "react-router-dom"
+import { Outlet, NavLink, useLocation } from "react-router-dom"
 import { useNavigate } from "react-router-dom"
 import { ToastContainer } from "react-toastify"
 import { useSystemStore } from "../stores/system.js"
@@ -8,6 +8,7 @@ import Button from "../components/form/Button"
 
 export default function App() {
   const navigate = useNavigate()
+  const { pathname } = useLocation()
   const { currentUser } = useSystemStore()
 
   useEffect(() => {
@@ -34,7 +35,7 @@ export default function App() {
 
   return (
     <main className="w-full h-full flex flex-col items-center">
-      <div className="hidden md:block absolute w-full h-25 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-primary-100 via-transparent to-transparent pointer-events-none"></div>
+      {/* <div className="hidden md:block absolute w-full h-25 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-primary-100 via-transparent to-transparent pointer-events-none"></div> */}
 
       <header className="relative w-full h-12 shrink-0 grow-0 flex justify-between items-center bg-background-200 px-4 md:px-8">
         <img onClick={() => navigate("/home")} className="hidden md:inline w-32 cursor-pointer" src="/images/logo.webp" alt="Logo de Latino Transit Solutions" />
@@ -55,11 +56,11 @@ export default function App() {
         </Button>
       </header>
 
-      <section className="max-w-[1600px] w-full h-full shrink grow overflow-y-auto md:scrollgutter-edges p-2 md:p-4">
+      <section className={`${pathname !== "/home" ? "p-2 md:p-4 md:scrollgutter-edges" : ""} max-w-[1600px] w-full h-full shrink grow overflow-y-auto`}>
         <Outlet />
       </section>
 
-      <footer className="w-full h-10 bg-background-200 flex justify-between items-center px-4 text-sm">
+      <footer className="w-full h-10 bg-background-200 flex justify-between items-center px-4 text-sm font-semibold">
         <div>Created by Johan Jiménez, Franco Wang & Harold Córdoba</div>
         <div>2024</div>
       </footer>

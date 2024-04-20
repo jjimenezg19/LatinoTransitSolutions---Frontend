@@ -244,7 +244,7 @@ export default function CreateRoute() {
 
   return (
     <section className="w-full h-full flex flex-col md:flex-row gap-10 md:gap-6 md:justify-center">
-      <div id="routeForm" className="w-full max-w-2xl shrink-0 grow-0 md:shrink md:grow md:max-h-full flex flex-col items-center mx-auto md:m-auto gap-3 md:gap-6 overflow-y-auto md:pr-2">
+      <div id="routeForm" className="w-full max-w-2xl shrink-0 grow-0 md:shrink md:grow md:max-h-full flex flex-col items-center mx-auto md:m-auto gap-4 overflow-y-auto md:pr-2">
         <div className="w-full flex flex-col gap-2">
           <h3 className="text-2xl md:text-4xl font-bold">Register route</h3>
           <p className="text-sm md:text-base text-word-200">Please fill in the form below to register your route.</p>

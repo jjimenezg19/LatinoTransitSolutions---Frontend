@@ -4,10 +4,15 @@ export default function Home() {
   const { currentUser } = useSystemStore()
 
   return (
-    <section className="w-full h-full flex flex-col gap-8 justify-center items-center">
-      <h2>
+    <div className="relative flex flex-col h-full items-center justify-center transition-bg">
+      <h1 className="font-bold">
         Welcome back <span className="text-primary-100 font-bold">{currentUser.name}</span>
-      </h2>
-    </section>
+        <i className="ml-4 fas fa-truck"></i>
+      </h1>
+
+      <div className="absolute inset-0 overflow-hidden">
+        <div className="jumbo absolute -inset-[10px] opacity-50"></div>
+      </div>
+    </div>
   )
 }
