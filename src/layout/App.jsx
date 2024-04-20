@@ -19,7 +19,7 @@ export default function App() {
 
   const clientRoutes = [
     { name: "Routes", path: "routes", access: "client" },
-    { name: "Trip", path: "trip", access: "client" },
+    // { name: "Trip", path: "trip", access: "client" },
     { name: "Packages", path: "my-packages", access: "client" },
     { name: "Requests Routes", path: "requests-routes", access: "approver" },
     // { name: "Sent Packages", path: "sent-packages", access: "checker" },
@@ -56,7 +56,7 @@ export default function App() {
         </Button>
       </header>
 
-      <section className={`${pathname !== "/home" ? "p-2 md:p-4 md:scrollgutter-edges" : ""} max-w-[1600px] w-full h-full shrink grow overflow-y-auto`}>
+      <section className={`${pathname !== "/home" ? "p-2 md:p-4 md:scrollgutter-edges max-w-[1600px]" : ""} w-full h-full shrink grow overflow-y-auto`}>
         <Outlet />
       </section>
 

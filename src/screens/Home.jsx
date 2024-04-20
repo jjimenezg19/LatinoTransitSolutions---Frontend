@@ -4,7 +4,7 @@ export default function Home() {
   const { currentUser } = useSystemStore()
 
   return (
-    <div className="relative flex flex-col h-full items-center justify-center transition-bg">
+    <div className="relative flex flex-col h-full w-full items-center justify-center transition-bg">
       <h1 className="font-bold">
         Welcome back <span className="text-primary-100 font-bold">{currentUser.name}</span>
         <i className="ml-4 fas fa-truck"></i>

@@ -8,9 +8,11 @@ import Table from "../../components/display/Table"
 import Button from "../../components/form/Button"
 import Modal from "../../components/display/Modal"
 import { isEmpty } from "lodash"
+import { useNavigate } from "react-router-dom"
 
 export default function createTrip() {
-  const { routeToTrip, currentUser } = useSystemStore()
+  const { routeToTrip, currentUser, setRouteToTrip } = useSystemStore()
+  const navigate = useNavigate()
 
   const [packagesList, setPackagesList] = useState([])
   const [packageEntity, setPackage] = useState({})
@@ -21,7 +23,7 @@ export default function createTrip() {
   const heads = [
     { text: "Type", scope: "type" },
     { text: "Name", scope: "name" },
-    { text: "Price", scope: "price" },
+    { text: "Price", scope: "price", prepend: "$" },
     { text: "Width", scope: "width" },
     { text: "Height", scope: "height" },
     { text: "Length", scope: "length" },
@@ -34,7 +36,7 @@ export default function createTrip() {
 
   useEffect(() => {
     if (routeToTrip.transportType && routeToTrip.transportName && routeToTrip.transportPlate) {
-      setTransport({ id: routeToTrip.transportId, type: routeToTrip.transportType, name: routeToTrip.transportName, maxWidth: routeToTrip.transportMaxWidth , maxHeight: routeToTrip.transportMaxHeight, maxLength: routeToTrip.transportMaxLength, maxWeight: routeToTrip.transportMaxWeight, plate: routeToTrip.transportPlate, idCarrier: routeToTrip.idCarrier })
+      setTransport({ id: routeToTrip.transportId, type: routeToTrip.transportType, name: routeToTrip.transportName, maxWidth: routeToTrip.transportMaxWidth, maxHeight: routeToTrip.transportMaxHeight, maxLength: routeToTrip.transportMaxLength, maxWeight: routeToTrip.transportMaxWeight, plate: routeToTrip.transportPlate, idCarrier: routeToTrip.idCarrier })
     }
   }, [routeToTrip])
 
@@ -56,13 +58,11 @@ export default function createTrip() {
     axios
       .post("/trip/create", { idClient: currentUser.id, idTransportRoute: routeToTrip.idTransportRoute, package: packageEntity, transport })
       .then(() => {
-        notify("The package has been added successfully", "success")
+        setIsTripStarted(true)
       })
       .catch((error) => {
         notify(error, "error")
       })
-
-      setIsTripStarted(true)
   }
 
   const getPackagesList = () => {
@@ -72,9 +72,9 @@ export default function createTrip() {
   }
 
   const closeModal = () => {
-    navigate("/routes")
-    routeToTrip(null)
     setIsTripStarted(false)
+    setRouteToTrip(null)
+    navigate("/routes")
   }
 
   return (
@@ -90,7 +90,7 @@ export default function createTrip() {
         </div>
 
         <div className="w-full flex justify-end shrink-0 grow-0">
-          <Button disabled={isEmpty(packagesList)} onClick={startTrip}>
+          <Button disabled={isEmpty(packageEntity)} onClick={startTrip}>
             Start trip
           </Button>
         </div>
@@ -171,14 +171,15 @@ export default function createTrip() {
         </div>
       </div>
 
-      <Modal width="400" height="400" className="h-130" open={isTripStarted} >
-        <div className="flex flex-col gap-4 h-full">
-          <p className="shrink-0 grow-0 text-lg md:text-xl font-bold">The trip has started successfully</p>
-          <p className="shrink-0 grow-0 text-lg md:text-xl font-bold">Tank you for trust in Latino Transit Solutions</p>
-          <div className="shrink-0 grow-0 w-full flex items-end gap-4">
-            <Button onClick={closeModal}>
-              Close
-            </Button>
+      <Modal width="400" open={isTripStarted} closeButton={false} persistent>
+        <div className="flex flex-col gap-4 h-full text-center">
+          <h4 className="font-bold text-balance">The trip has started successfully</h4>
+          <div className="flex flex-col items-center">
+            <span className="text-lg text-balance">Tank you for trust in</span>
+            <img src="/images/logo.webp" alt="Logo de Latino Transit Solutions" className="w-50" />
+          </div>
+          <div className="w-full flex justify-center">
+            <Button onClick={closeModal}>Close</Button>
           </div>
         </div>
       </Modal>
