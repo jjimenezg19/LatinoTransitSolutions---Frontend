@@ -32,7 +32,7 @@ export default function createTrip() {
 
   useEffect(() => {
     if (routeToTrip.transportType && routeToTrip.transportName && routeToTrip.transportPlate) {
-      setTransport({ maxWeight: routeToTrip.transportMaxWeight, maxLength: routeToTrip.transportMaxLength, maxHeight: routeToTrip.transportMaxHeight, maxWidth: routeToTrip.transportMaxWidth })
+      setTransport({ id: routeToTrip.transportId, type: routeToTrip.transportType, name: routeToTrip.transportName, maxWidth: routeToTrip.transportMaxWidth , maxHeight: routeToTrip.transportMaxHeight, maxLength: routeToTrip.transportMaxLength, maxWeight: routeToTrip.transportMaxWeight, plate: routeToTrip.transportPlate, idCarrier: routeToTrip.idCarrier })
     }
   }, [routeToTrip])
 
@@ -163,18 +163,3 @@ export default function createTrip() {
     </section>
   )
 }
-
-/**
- * <h3>Asignación de paquete a ruta seleccionada para cliente</h3>
-      <ul>
-        <li>Mapa con la ruta seleccionada</li>
-        <li>Detalles de la ruta</li>
-        <li>Detalles del transporte</li>
-        <li>Lista de paquetes para asignar a la ruta</li>
-        <li>Botón de confirmar viaje</li>
-        <li>{routeToTrip.idTransportRoute}</li>
-        <li>{routeToTrip.transportName}</li>
-        <li>{routeToTrip.transportType}</li>
-      </ul>
-    </section>
- */
