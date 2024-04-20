@@ -24,10 +24,10 @@ export default function createTrip() {
     { text: "Type", scope: "type" },
     { text: "Name", scope: "name" },
     { text: "Price", scope: "price", prepend: "$" },
-    { text: "Width", scope: "width" },
-    { text: "Height", scope: "height" },
-    { text: "Length", scope: "length" },
-    { text: "Weight", scope: "weight" }
+    { text: "Width", scope: "width", append: " m" },
+    { text: "Height", scope: "height", append: " m"  },
+    { text: "Length", scope: "length", append: " m"  },
+    { text: "Weight", scope: "weight", append: " Kg"}
   ]
 
   useEffect(() => {
@@ -175,7 +175,7 @@ export default function createTrip() {
         <div className="flex flex-col gap-4 h-full text-center">
           <h4 className="font-bold text-balance">The trip has started successfully</h4>
           <div className="flex flex-col items-center">
-            <span className="text-lg text-balance">Tank you for trust in</span>
+            <span className="text-lg text-balance">Thank you for trust in</span>
             <img src="/images/logo.webp" alt="Logo de Latino Transit Solutions" className="w-50" />
           </div>
           <div className="w-full flex justify-center">
