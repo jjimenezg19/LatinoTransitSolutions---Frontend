@@ -6,6 +6,7 @@ import { notify } from "../../utils/notify.js"
 import Map from "../../components/map/Map"
 import Table from "../../components/display/Table"
 import Button from "../../components/form/Button"
+import Modal from "../../components/display/Modal"
 import { isEmpty } from "lodash"
 
 export default function createTrip() {
@@ -14,6 +15,7 @@ export default function createTrip() {
   const [packagesList, setPackagesList] = useState([])
   const [packageEntity, setPackage] = useState({})
   const [transport, setTransport] = useState({})
+  const [isTripStarted, setIsTripStarted] = useState(false)
   const [route, setRoute] = useState({})
 
   const heads = [
@@ -54,17 +56,25 @@ export default function createTrip() {
     axios
       .post("/trip/create", { idClient: currentUser.id, idTransportRoute: routeToTrip.idTransportRoute, package: packageEntity, transport })
       .then(() => {
-        notify("The trip has started successfully", "success")
+        notify("The package has been added successfully", "success")
       })
-      .catch(() => {
-        notify("The package con not be transport for this vehicle", "error")
+      .catch((error) => {
+        notify(error, "error")
       })
+
+      setIsTripStarted(true)
   }
 
   const getPackagesList = () => {
     axios.get(`/package/get-my-packages/${currentUser.id}`).then((response) => {
       setPackagesList(response)
     })
+  }
+
+  const closeModal = () => {
+    navigate("/routes")
+    routeToTrip(null)
+    setIsTripStarted(false)
   }
 
   return (
@@ -160,6 +170,18 @@ export default function createTrip() {
           )}
         </div>
       </div>
+
+      <Modal width="400" height="400" className="h-130" open={isTripStarted} >
+        <div className="flex flex-col gap-4 h-full">
+          <p className="shrink-0 grow-0 text-lg md:text-xl font-bold">The trip has started successfully</p>
+          <p className="shrink-0 grow-0 text-lg md:text-xl font-bold">Tank you for trust in Latino Transit Solutions</p>
+          <div className="shrink-0 grow-0 w-full flex items-end gap-4">
+            <Button onClick={closeModal}>
+              Close
+            </Button>
+          </div>
+        </div>
+      </Modal>
     </section>
   )
 }
