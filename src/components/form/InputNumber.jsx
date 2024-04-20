@@ -1,9 +1,13 @@
+import { useState } from "react"
 import Button from "./Button"
 import Input from "./Input"
+import { replace } from "lodash"
 
 export default function InputNumber({ label, value, disabled, readonly, placeholder, error, min, max, noHint, onUpdateValue }) {
   min = min ? Number(min) : null
   max = max ? Number(max) : null
+
+  const [current, setCurrent] = useState(value)
 
   if (min !== null && value < min) {
     value = min
@@ -18,7 +22,28 @@ export default function InputNumber({ label, value, disabled, readonly, placehol
   const handleInput = (val) => {
     if (disabled || readonly) return null
 
-    val = Number(val.replace(/[^\d]/g, ""))
+    const regex = /^([0-9]+\.?[0-9]*|\.[0-9]+)$/
+
+    if (val.length >= 2 && val.startsWith("0")) {
+      val = val.substring(1)
+    }
+
+    if (val.startsWith(".")) {
+      val = "0." + val.replaceAll(".", "")
+    }
+
+    if (val.match(/\./g)?.length >= 2) {
+      const index = val.indexOf(".")
+
+      const array = val.replaceAll(".", "").split("")
+      array.splice(index, 0, ".")
+
+      val = array.join("")
+    }
+
+    if (!regex.test(val)) {
+      val = val.substring(0, val.length - 1)
+    }
 
     if (min !== null && val < min) {
       val = min
@@ -28,7 +53,9 @@ export default function InputNumber({ label, value, disabled, readonly, placehol
       val = max
     }
 
-    onUpdateValue(val)
+    setCurrent(val)
+
+    onUpdateValue(Number(val))
   }
 
   const handleButton = (action) => {
@@ -44,6 +71,8 @@ export default function InputNumber({ label, value, disabled, readonly, placehol
       return null
     }
 
+    setCurrent(value + action)
+
     onUpdateValue(value + action)
   }
 
@@ -55,7 +84,7 @@ export default function InputNumber({ label, value, disabled, readonly, placehol
           <Button disabled={disabled || (min !== null && value <= min)} readonly={readonly} onClick={() => handleButton(-1)} className="!pl-2 !pr-4 -mr-2">
             <i className="fas fa-minus"></i>
           </Button>
-          <Input value={value} onUpdateValue={handleInput} className="w-full relative" type="text" disabled={disabled} readonly={readonly} error={error} placeholder={placeholder} noHint></Input>
+          <Input value={current} onUpdateValue={handleInput} className="w-full relative" type="text" disabled={disabled} readonly={readonly} error={error} placeholder={placeholder} noHint></Input>
           <Button disabled={disabled || (max !== null && value >= max)} readonly={readonly} onClick={() => handleButton(1)} className="!pr-2 !pl-4 -ml-2">
             <i className="fas fa-plus"></i>
           </Button>
