@@ -18,7 +18,7 @@ export default function App() {
 
   const clientRoutes = [
     { name: "Routes", path: "routes", access: "client" },
-    // { name: "Trip", path: "trip", access: "client" },
+    { name: "Trip", path: "trip", access: "client" },
     { name: "Packages", path: "my-packages", access: "client" },
     { name: "Requests Routes", path: "requests-routes", access: "approver" },
     // { name: "Sent Packages", path: "sent-packages", access: "checker" },
