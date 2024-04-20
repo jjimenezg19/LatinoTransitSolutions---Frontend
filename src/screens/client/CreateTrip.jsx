@@ -23,7 +23,7 @@ export default function createTrip() {
     { text: "Width", scope: "width" },
     { text: "Height", scope: "height" },
     { text: "Length", scope: "length" },
-    { text: "Weight", scope: "weight" },
+    { text: "Weight", scope: "weight" }
   ]
 
   useEffect(() => {
@@ -32,37 +32,33 @@ export default function createTrip() {
 
   useEffect(() => {
     if (routeToTrip.transportType && routeToTrip.transportName && routeToTrip.transportPlate) {
-      setTransport({maxWeight: routeToTrip.transportMaxWeight, maxLength: routeToTrip.transportMaxLength, maxHeight: routeToTrip.transportMaxHeight, maxWidth: routeToTrip.transportMaxWidth });
+      setTransport({ maxWeight: routeToTrip.transportMaxWeight, maxLength: routeToTrip.transportMaxLength, maxHeight: routeToTrip.transportMaxHeight, maxWidth: routeToTrip.transportMaxWidth })
     }
-  }, [routeToTrip]);
+  }, [routeToTrip])
 
   useEffect(() => {
     if (routeToTrip.transportType && routeToTrip.startLongitude && routeToTrip.endLatitude && routeToTrip.endLongitude) {
       setRoute({
         origin: { lat: Number(routeToTrip.startLatitude), lng: Number(routeToTrip.startLongitude) },
         destination: { lat: Number(routeToTrip.endLatitude), lng: Number(routeToTrip.endLongitude) }
-      });
+      })
     }
-  }, [routeToTrip]);
-
+  }, [routeToTrip])
 
   const onSetPackage = ({ row }) => {
-    
-    const { id, type, name, description, price, width, height, length, weight, idUser} =  row
+    const { id, type, name, description, price, width, height, length, weight } = row
+    setPackage({ id, type, name, description, price, width, height, length, weight, idUser: currentUser.id })
+  }
 
-    setPackage({id, type, name, description, price, width, height, length, weight, idUser})
-    console.log(row)
-
-
+  const startTrip = () => {
     axios
-        .post("/trip/create", { idClient: currentUser.id, idTransportRoute: routeToTrip.idTransportRoute,package: packageEntity, transport })
-        .then(() => {
-          notify("The trip has started successfully", "success")
-        
-        })
-        .catch(() => {
-          notify("The package con not be transport for this vehicle", "error")
-        })
+      .post("/trip/create", { idClient: currentUser.id, idTransportRoute: routeToTrip.idTransportRoute, package: packageEntity, transport })
+      .then(() => {
+        notify("The trip has started successfully", "success")
+      })
+      .catch(() => {
+        notify("The package con not be transport for this vehicle", "error")
+      })
   }
 
   const getPackagesList = () => {
@@ -84,7 +80,7 @@ export default function createTrip() {
         </div>
 
         <div className="w-full flex justify-end shrink-0 grow-0">
-          <Button disabled={isEmpty(packagesList)} onClick={() => null}>
+          <Button disabled={isEmpty(packagesList)} onClick={startTrip}>
             Start trip
           </Button>
         </div>
@@ -164,8 +160,6 @@ export default function createTrip() {
           )}
         </div>
       </div>
-
-
     </section>
   )
 }
