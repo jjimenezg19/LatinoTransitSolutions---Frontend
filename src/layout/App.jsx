@@ -59,6 +59,11 @@ export default function App() {
         <Outlet />
       </section>
 
+      <footer className="w-full h-10 bg-background-200 flex justify-between items-center px-4 text-sm">
+        <div>Created by Johan Jiménez, Franco Wang & Harold Córdoba</div>
+        <div>2024</div>
+      </footer>
+
       <ToastContainer autoClose={5000} closeOnClick pauseOnHover stacked theme="dark" />
     </main>
   )

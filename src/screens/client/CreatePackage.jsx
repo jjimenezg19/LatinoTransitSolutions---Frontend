@@ -36,7 +36,7 @@ export default function CreatePackage() {
     { text: "Type", scope: "type" },
     { text: "Name", scope: "name" },
     { text: "Description", scope: "description" },
-    { text: "Price", scope: "price" },
+    { text: "Price", scope: "price", prepend: "$" },
     { text: "Width", scope: "width" },
     { text: "Height", scope: "height" },
     { text: "Length", scope: "length" },
