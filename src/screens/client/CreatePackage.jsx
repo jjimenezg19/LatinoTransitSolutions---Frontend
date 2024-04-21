@@ -37,10 +37,10 @@ export default function CreatePackage() {
     { text: "Name", scope: "name" },
     { text: "Description", scope: "description" },
     { text: "Price", scope: "price", prepend: "$" },
-    { text: "Width", scope: "width" },
-    { text: "Height", scope: "height" },
-    { text: "Length", scope: "length" },
-    { text: "Weight", scope: "weight" }
+    { text: "Width", scope: "width", append: " m"  },
+    { text: "Height", scope: "height", append: " m"  },
+    { text: "Length", scope: "length", append: " m"  },
+    { text: "Weight", scope: "weight", append: " Kg"}
   ]
 
   const onUpdatePackageData = (key, value) => {
