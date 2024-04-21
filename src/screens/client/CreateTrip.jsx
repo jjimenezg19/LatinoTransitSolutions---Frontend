@@ -25,9 +25,9 @@ export default function createTrip() {
     { text: "Name", scope: "name" },
     { text: "Price", scope: "price", prepend: "$" },
     { text: "Width", scope: "width", append: " m" },
-    { text: "Height", scope: "height", append: " m"  },
-    { text: "Length", scope: "length", append: " m"  },
-    { text: "Weight", scope: "weight", append: " Kg"}
+    { text: "Height", scope: "height", append: " m" },
+    { text: "Length", scope: "length", append: " m" },
+    { text: "Weight", scope: "weight", append: " Kg" }
   ]
 
   useEffect(() => {

@@ -36,10 +36,10 @@ export default function CreateTransport() {
     { text: "ID", scope: "id" },
     { text: "Type", scope: "type" },
     { text: "Name", scope: "name" },
-    { text: "Max width", scope: "maxWidth" },
-    { text: "Max height", scope: "maxHeight" },
-    { text: "Max length", scope: "maxLength" },
-    { text: "Max weight", scope: "maxWeight" },
+    { text: "Max width", scope: "maxWidth", append: " m" },
+    { text: "Max height", scope: "maxHeight", append: " m" },
+    { text: "Max length", scope: "maxLength", append: " m" },
+    { text: "Max weight", scope: "maxWeight", append: " Kg" },
     { text: "Plate", scope: "plate" }
   ]
 
